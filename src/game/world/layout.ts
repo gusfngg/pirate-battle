@@ -43,7 +43,7 @@ export interface TilePlacement {
 
 export const ARENA_LAYOUT = layoutData as ArenaLayout;
 
-// the tilesheet draws islands as nine slice blocks, these are the tile ids per slice
+// o tilesheet desenha ilhas em nine slice, estes são os ids de tile de cada fatia
 const SAND_SLICES = [
   [1, 2, 3],
   [17, 18, 19],

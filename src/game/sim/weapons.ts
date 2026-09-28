@@ -61,7 +61,7 @@ export function fireBow(context: SimContext, ship: Ship, side: Side, cannon: Can
   return true;
 }
 
-// three balls leave the side of the hull side by side
+// três balas saem lado a lado pela lateral do casco
 export function fireBroadside(context: SimContext, ship: Ship, weapon: "left" | "right") {
   if (ship.cooldowns[weapon] > 0) return false;
   const broadside = context.config.player.broadside;

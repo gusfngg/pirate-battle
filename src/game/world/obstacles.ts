@@ -27,7 +27,7 @@ export interface Contact {
   normalY: number;
 }
 
-// the sand art has a soft transparent rim, the collider hugs the visible shore
+// a areia tem uma borda transparente, o colisor acompanha a praia visível
 const SHORE_INSET = 14;
 const SHORE_CORNER = 38;
 
@@ -65,7 +65,7 @@ function contactWithRock(rock: RockObstacle, x: number, y: number, radius: numbe
   return { depth, normalX: dx / distance, normalY: dy / distance };
 }
 
-// a rounded rectangle is an inner rectangle grown by the corner radius
+// retângulo arredondado = retângulo interno expandido pelo raio do canto
 function contactWithIsland(island: IslandObstacle, x: number, y: number, radius: number): Contact | null {
   const innerLeft = island.x + island.corner;
   const innerTop = island.y + island.corner;
@@ -84,7 +84,7 @@ function contactWithIsland(island: IslandObstacle, x: number, y: number, radius:
     return { depth: reach - distance, normalX: dx / distance, normalY: dy / distance };
   }
 
-  // the centre is inside the inner rectangle, push out through the nearest side
+  // o centro está dentro do retângulo interno, empurra pelo lado mais próximo
   const toLeft = x - innerLeft;
   const toRight = innerRight - x;
   const toTop = y - innerTop;

@@ -25,7 +25,7 @@ function strike(context: SimContext, projectile: Projectile) {
   return false;
 }
 
-// each ball is removed the moment it lands, so it can only ever deal damage once
+// a bala some no instante em que acerta, então só causa dano uma vez
 export function updateProjectiles(context: SimContext, dt: number) {
   const { width, height } = context.config.arena;
   const survivors: Projectile[] = [];

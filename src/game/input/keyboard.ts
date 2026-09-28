@@ -30,7 +30,7 @@ function isTyping(target: EventTarget | null) {
   return target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName);
 }
 
-// keys are only captured while the match is live, menus keep their normal keyboard
+// só captura teclas com a partida ativa, os menus mantêm o teclado normal
 export function bindKeyboard({ pad, isActive, onPause }: KeyboardOptions) {
   function onKeyDown(event: KeyboardEvent) {
     if (!isActive() || isTyping(event.target)) return;

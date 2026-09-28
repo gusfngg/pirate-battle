@@ -21,7 +21,7 @@ export function angleBetween(from: Vec, to: Vec) {
   return Math.atan2(to.y - from.y, to.x - from.x);
 }
 
-// keeps an angle inside (-pi, pi]
+// mantém o ângulo dentro de (-pi, pi]
 export function wrapAngle(angle: number) {
   let wrapped = angle % TAU;
   if (wrapped > Math.PI) wrapped -= TAU;

@@ -37,7 +37,7 @@ export function coolDown(ship: Ship, dt: number) {
   ship.cooldowns.right = Math.max(0, ship.cooldowns.right - dt);
 }
 
-// ships keep some rudder at rest so they can always point away from trouble
+// navio parado ainda gira um pouco, pra sempre conseguir sair de enrascada
 export function steer(ship: Ship, hull: HullConfig, helm: Helm, dt: number) {
   const speedRatio = clamp(ship.speed / hull.maxSpeed, 0, 1);
   const rudder = 0.55 + 0.45 * speedRatio;
@@ -48,7 +48,7 @@ export function steer(ship: Ship, hull: HullConfig, helm: Helm, dt: number) {
   ship.speed = approach(ship.speed, targetSpeed, rate * dt);
 }
 
-// moves along the heading, then resolves islands, rocks and the arena edge
+// anda na direção da proa e depois resolve ilhas, pedras e borda da arena
 export function sail(ship: Ship, dt: number, context: SimContext) {
   ship.x += Math.cos(ship.angle) * ship.speed * dt;
   ship.y += Math.sin(ship.angle) * ship.speed * dt;
@@ -76,7 +76,7 @@ export function sail(ship: Ship, dt: number, context: SimContext) {
   }
 }
 
-// keeps two hulls from overlapping by pushing both apart
+// empurra os dois cascos pra eles não se sobreporem
 export function separate(a: Ship, b: Ship) {
   const dx = b.x - a.x;
   const dy = b.y - a.y;

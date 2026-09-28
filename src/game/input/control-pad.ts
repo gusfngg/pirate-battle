@@ -4,7 +4,7 @@ export type Action = keyof Controls;
 
 export const ACTIONS: readonly Action[] = ["forward", "turnLeft", "turnRight", "fireFront", "fireLeft", "fireRight"];
 
-// keyboard and touch both write here, each source releases only what it pressed
+// teclado e toque escrevem aqui, cada fonte solta só o que ela apertou
 export class ControlPad {
   private readonly held = new Map<Action, Set<string>>();
 

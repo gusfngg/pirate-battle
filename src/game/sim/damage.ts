@@ -23,7 +23,7 @@ export function damageShip(context: SimContext, ship: Ship, amount: number) {
   });
 }
 
-// only cannon fire from the player earns a point, a chaser crashing into you does not
+// só tiro de canhão do jogador pontua, chaser batendo em você não conta
 export function sinkByCannon(context: SimContext, ship: Ship) {
   destroyShip(context, ship, "cannon");
   if (ship.kind !== "player" && context.state.phase === "running") {

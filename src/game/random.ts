@@ -16,7 +16,7 @@ function shuffleWith<T>(items: readonly T[], next: () => number): T[] {
   return copy;
 }
 
-// mulberry32, small and good enough for gameplay, same seed same match
+// mulberry32, pequeno e suficiente pro jogo, mesma seed gera a mesma partida
 export function createRandom(seed: number): Random {
   let state = seed >>> 0;
 

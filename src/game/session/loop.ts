@@ -1,6 +1,6 @@
 export const FIXED_STEP = 1 / 60;
 
-// a slow frame never turns into a huge jump, the simulation just catches up a bit
+// frame lento não vira um salto gigante, a simulação só recupera um pouco
 const MAX_FRAME = 0.25;
 
 export class FixedStepLoop {

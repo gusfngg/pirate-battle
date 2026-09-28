@@ -67,7 +67,7 @@ export const BASE_CONFIG: GameConfig = {
     firstSpawnDelaySeconds: 1.5,
     maxEnemies: 10,
     spawnMinDistance: 520,
-    // a shuffled bag guarantees both enemy types show up in every match
+    // um saco embaralhado garante os dois tipos de inimigo em toda partida
     spawnBag: ["chaser", "shooter", "chaser", "shooter", "chaser"],
   },
   player: {
@@ -117,7 +117,7 @@ export function normalizeMatchOptions(options: Partial<MatchOptions>): MatchOpti
   };
 }
 
-// every match plays with a frozen copy, later option changes only affect new matches
+// cada partida usa uma cópia congelada, mudar as opções só vale pra próxima
 export function createMatchConfig(options: MatchOptions, overrides: Partial<Pick<GameConfig, "countdownSeconds">> = {}): GameConfig {
   const safe = normalizeMatchOptions(options);
   const config = structuredClone(BASE_CONFIG);

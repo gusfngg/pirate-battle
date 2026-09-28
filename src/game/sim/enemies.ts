@@ -17,7 +17,7 @@ function isBlocked(context: SimContext, ship: Ship, angle: number, reach: number
   return outside || hitsAnyObstacle(context.obstacles, x, y, ship.radius * 0.8);
 }
 
-// steer towards a heading, but bend around islands with two whisker probes
+// segue o rumo, mas contorna ilhas usando duas sondas (bigodes)
 function avoidObstacles(context: SimContext, ship: Ship, desired: number) {
   if (!isBlocked(context, ship, desired, LOOK_AHEAD)) return desired;
 
@@ -60,7 +60,7 @@ function updateShooter(context: SimContext, shooter: Ship, dt: number) {
   const config = context.config.shooter;
   const range = distance(shooter, player);
 
-  // leads the target a little so a straight line is not a safe line
+  // mira um pouco à frente do alvo, andar reto não é seguro
   const travelTime = range / config.cannon.speed;
   const aimX = player.x + Math.cos(player.angle) * player.speed * travelTime * 0.6;
   const aimY = player.y + Math.sin(player.angle) * player.speed * travelTime * 0.6;

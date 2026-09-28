@@ -23,7 +23,7 @@ function isOpenWater(context: SimContext, x: number, y: number, radius: number) 
   return context.state.enemies.every((enemy) => !enemy.alive || distance(enemy, { x, y }) > enemy.radius + radius + CLEARANCE);
 }
 
-// enemies enter from the edges, on open water and far enough to be fair
+// inimigos entram pelas bordas, em água livre e longe o bastante pra ser justo
 export function findSpawnPoint(context: SimContext, radius: number) {
   const { player } = context.state;
   const minDistance = context.config.match.spawnMinDistance;

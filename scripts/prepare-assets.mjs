@@ -17,7 +17,7 @@ function frameName(file) {
   return file.replace(/\.png$/, "");
 }
 
-// kenney starling xml -> pixi spritesheet json
+// xml starling da kenney -> json de spritesheet do pixi
 function convertShipsAtlas() {
   const xml = readFileSync(join(source, "spritesheet", "ships_miscellaneous_sheet.xml"), "utf8");
   const frames = {};
@@ -39,7 +39,7 @@ function convertShipsAtlas() {
   return Object.keys(frames).length;
 }
 
-// the tilesheet is a plain 16 x 6 grid of 64px tiles
+// o tilesheet é uma grade simples de 16 x 6 tiles de 64px
 function buildTilesAtlas(scale, imageName, outputName) {
   const size = 64 * scale;
   const frames = {};
@@ -64,7 +64,7 @@ function buildTilesAtlas(scale, imageName, outputName) {
   });
 }
 
-// keeps only what pixi needs from the ui atlas and points it at the copied image
+// guarda do atlas de ui só o que o pixi usa e aponta pra imagem copiada
 function copyUiAtlas(jsonName, imageName, outputName) {
   const atlas = JSON.parse(readFileSync(join(source, "spritesheet", jsonName), "utf8"));
   const frames = {};
@@ -92,11 +92,12 @@ buildTilesAtlas(2, "tiles_sheet_retina.png", "tiles@2x");
 copyUiAtlas("ui_sheet.json", "ui_sheet.png", "ui");
 copyUiAtlas("ui_sheet_retina.json", "ui_sheet_retina.png", "ui@2x");
 
-// css uses the loose ui pngs, sounds are streamed as they are
+// o css usa os pngs soltos de ui, os sons vão como estão
 cpSync(join(source, "png", "default", "ui"), join(target, "ui"), { recursive: true });
 cpSync(join(source, "png", "retina", "ui"), join(target, "ui@2x"), { recursive: true });
 cpSync(join(source, "png", "default", "ships"), join(target, "ships"), { recursive: true });
 cpSync(join(source, "sounds"), join(target, "sounds"), { recursive: true });
 cpSync(join(source, "logo_jungle_gaming.svg"), join(target, "logo_jungle_gaming.svg"));
+cpSync(join(source, "ui_scene_background.png"), join(target, "menu_background.png"));
 
 console.log(`assets ready: ${shipFrames} ship frames, 96 tiles, ui atlas, sounds`);

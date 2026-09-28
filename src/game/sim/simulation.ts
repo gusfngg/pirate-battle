@@ -16,7 +16,7 @@ export interface SimulationOptions {
   seed: number;
 }
 
-// the whole match lives here, no pixi and no react, just numbers moving in time
+// a partida inteira mora aqui, sem pixi e sem react, só números andando no tempo
 export class Simulation {
   readonly config: GameConfig;
   readonly obstacles: readonly Obstacle[];
@@ -91,7 +91,7 @@ export class Simulation {
     return drained;
   }
 
-  // used by the e2e bridge to stage a scene, it goes through the real spawn rules
+  // usado pela ponte de e2e pra montar cenas, passa pelas regras reais de spawn
   spawnEnemyAt(kind: EnemyKind, x: number, y: number, angle?: number) {
     return spawnEnemy(this.context, kind, x, y, angle);
   }
