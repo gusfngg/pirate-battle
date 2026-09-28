@@ -797,3 +797,285 @@ kbd {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* diário do capitão: ranking e histórico */
+.logbook {
+  gap: 10px;
+}
+
+.logbook__tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.logbook__panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-height: 330px;
+}
+
+.logbook__subtitle {
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 14px;
+}
+
+.logbook__sync {
+  color: var(--gold);
+}
+
+.logbook__warning,
+.logbook__pending {
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(120, 60, 30, 0.45);
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.logbook__pending {
+  background: rgba(146, 120, 62, 0.35);
+  color: var(--gold);
+}
+
+.logbook__state {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-weight: 700;
+  max-width: 44ch;
+}
+
+.logbook__state[role="alert"] p {
+  margin: 0;
+  color: var(--danger);
+}
+
+.logbook__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  text-align: left;
+  transition: opacity 150ms;
+}
+
+.logbook__table.is-stale {
+  opacity: 0.55;
+}
+
+.logbook__table th {
+  padding: 0 14px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.logbook__table td {
+  padding: 10px 14px;
+  background: var(--row);
+  font-weight: 800;
+}
+
+.logbook__table td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.logbook__table td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.logbook__table tr.is-mine td {
+  background: var(--row-highlight);
+}
+
+.cell-rank,
+.cell-points {
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.cell-captain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cell-star {
+  width: 22px;
+}
+
+.cell-date {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.cell-date strong {
+  color: var(--cream);
+}
+
+.cell-result {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.cell-result small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: none;
+}
+
+.cell-result--time {
+  color: var(--success);
+}
+
+.cell-result--destroyed {
+  color: var(--danger);
+}
+
+.you-badge {
+  padding: 1px 6px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cream);
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* situação do registro na tela de resultado */
+.registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 36ch;
+}
+
+.registration p {
+  margin: 0;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.registration--registered p {
+  color: var(--success);
+}
+
+.registration--failed p {
+  color: var(--danger);
+}
+
+.registration--pending p,
+.registration--unknown p {
+  color: var(--muted);
+}
+
+/* painel de cenários de rede */
+.network-lab-toggle {
+  position: fixed;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(12, 22, 36, 0.75);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.network-lab-toggle strong {
+  color: var(--gold);
+}
+
+.network-lab {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 4px;
+  max-height: min(52dvh, 420px);
+  overflow-y: auto;
+  text-align: left;
+}
+
+.network-lab legend {
+  margin-bottom: 6px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.network-lab__option {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.network-lab__option:has(input:checked) {
+  background: var(--row-highlight);
+}
+
+.network-lab__option span {
+  display: grid;
+}
+
+.network-lab__option small {
+  color: var(--muted);
+}
+
+.panel-actions--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .logbook__table td,
+  .logbook__table th {
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+
+  .wood-panel {
+    border-width: 36px;
+    border-image-width: 36px;
+  }
+
+  .game-button {
+    min-width: 200px;
+  }
+}

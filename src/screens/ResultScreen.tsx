@@ -1,3 +1,6 @@
+import { useIsMutating } from "@tanstack/react-query";
+import { outboxStore, registrationStatus, requestSync } from "@/api/outbox";
+import { REGISTER_MUTATION_KEY } from "@/api/queries";
 import { lastResultStore } from "@/app/preferences";
 import { navigate } from "@/app/router";
 import { formatClock, formatEndReason } from "@/lib/format";
@@ -44,6 +47,7 @@ export function ResultScreen() {
         <p className="result-config">
           {result.config.sessionSeconds} second battle · {result.config.spawnSeconds} second spawn interval
         </p>
+        <RegistrationStatus matchId={result.matchId} />
         <div className="panel-actions">
           <GameButton autoFocus onClick={() => navigate("play")}>
             Play again
@@ -52,5 +56,30 @@ export function ResultScreen() {
         </div>
       </section>
     </main>
+  );
+}
+
+// situação do registro no servidor, com nova tentativa manual quando falha
+function RegistrationStatus({ matchId }: { matchId: string }) {
+  const status = useStore(outboxStore, (state) => registrationStatus(state, matchId));
+  const lastError = useStore(outboxStore, (state) => state.pending.find((item) => item.record.matchId === matchId)?.lastError ?? null);
+  const syncing = useIsMutating({ mutationKey: REGISTER_MUTATION_KEY }) > 0;
+
+  const message = {
+    registered: "Saved to the captain's log.",
+    pending: "Saving to the captain's log…",
+    failed: syncing ? "Trying to save again…" : `Not saved yet. ${lastError ?? ""} Your result is kept safe and will be sent again.`,
+    unknown: "This battle is not in the captain's log.",
+  }[status];
+
+  return (
+    <div className={`registration registration--${status}`} data-testid="registration-status" data-status={status}>
+      <p role="status">{message}</p>
+      {status === "failed" ? (
+        <GameButton size="small" variant="secondary" disabled={syncing} onClick={() => requestSync()}>
+          Retry now
+        </GameButton>
+      ) : null}
+    </div>
   );
 }

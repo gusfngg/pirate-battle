@@ -29,3 +29,6 @@ playwright/.cache/
 
 # Local Claude Code files
 .claude/
+
+# Local screenshot helper
+*.tmp.mjs

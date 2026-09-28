@@ -6,6 +6,8 @@ const OPTIONS_KEY = "pirate-battle:options";
 const LAST_RESULT_KEY = "pirate-battle:last-result";
 
 export interface LastResult {
+  playerId?: string;
+  playerName?: string;
   matchId: string;
   playedAt: string;
   score: number;
