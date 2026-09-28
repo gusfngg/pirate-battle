@@ -1,0 +1,74 @@
+{
+  "tileSize": 64,
+  "columns": 25,
+  "rows": 14,
+  "playerStart": { "x": 800, "y": 430, "angle": -1.5708 },
+  "islands": [
+    {
+      "id": "palm-grove",
+      "style": "grass",
+      "column": 2,
+      "row": 1,
+      "columns": 4,
+      "rows": 4,
+      "decor": [
+        { "tile": 71, "x": 1.2, "y": 1.3, "scale": 0.9 },
+        { "tile": 70, "x": 2.7, "y": 2.4, "scale": 0.8 },
+        { "tile": 88, "x": 1.9, "y": 2.9, "scale": 1 }
+      ]
+    },
+    {
+      "id": "north-sandbank",
+      "style": "sand",
+      "column": 17,
+      "row": 1,
+      "columns": 3,
+      "rows": 3,
+      "decor": [
+        { "tile": 66, "x": 1.1, "y": 1.2, "scale": 0.8 },
+        { "tile": 72, "x": 2, "y": 1.9, "scale": 0.8 }
+      ]
+    },
+    {
+      "id": "turtle-isle",
+      "style": "grass",
+      "column": 13,
+      "row": 8,
+      "columns": 5,
+      "rows": 4,
+      "decor": [
+        { "tile": 71, "x": 3.6, "y": 1.3, "scale": 1 },
+        { "tile": 72, "x": 1.4, "y": 2.5, "scale": 0.9 },
+        { "tile": 87, "x": 2.6, "y": 2.8, "scale": 1 },
+        { "tile": 70, "x": 3.8, "y": 2.8, "scale": 0.7 }
+      ]
+    },
+    {
+      "id": "skull-beach",
+      "style": "sand",
+      "column": 3,
+      "row": 9,
+      "columns": 4,
+      "rows": 3,
+      "decor": [
+        { "tile": 50, "x": 1.2, "y": 1.3, "scale": 0.7 },
+        { "tile": 70, "x": 2.8, "y": 1.6, "scale": 0.7 }
+      ]
+    },
+    {
+      "id": "lonely-cay",
+      "style": "sand",
+      "column": 21,
+      "row": 9,
+      "columns": 2,
+      "rows": 2,
+      "decor": [{ "tile": 72, "x": 1, "y": 1, "scale": 0.7 }]
+    }
+  ],
+  "rocks": [
+    { "tile": 50, "x": 610, "y": 190, "radius": 26 },
+    { "tile": 51, "x": 1010, "y": 300, "radius": 20 },
+    { "tile": 65, "x": 1490, "y": 380, "radius": 20 },
+    { "tile": 67, "x": 600, "y": 600, "radius": 20 }
+  ]
+}
