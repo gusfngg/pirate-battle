@@ -26,9 +26,14 @@ export function TouchControls({ pad, disabled }: { pad: ControlPad; disabled: bo
     return (event: PointerEvent<HTMLButtonElement>) => {
       if (disabled) return;
       event.preventDefault();
-      event.currentTarget.setPointerCapture(event.pointerId);
-      event.currentTarget.dataset.pressed = "true";
       pad.press(action, `touch-${event.pointerId}`);
+      event.currentTarget.dataset.pressed = "true";
+      // a captura segura o botão mesmo se o dedo escorregar, mas o ponteiro pode já ter sumido
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      } catch {
+        // sem captura o botão ainda solta no pointerup
+      }
     };
   }
 

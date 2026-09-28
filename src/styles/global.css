@@ -750,6 +750,14 @@ kbd {
 
 .wood-panel--dialog {
   width: min(460px, calc(100vw - 32px));
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
+}
+
+@media (max-height: 520px) {
+  .network-lab {
+    max-height: 38dvh;
+  }
 }
 
 /* telas baixas (celular deitado): tudo mais compacto pra caber sem rolar */
@@ -1093,4 +1101,36 @@ kbd {
 
 .text-input[aria-invalid="true"] {
   border-color: var(--danger);
+}
+
+/* celular deitado: o menu inteiro precisa caber sem rolar */
+@media (max-height: 420px) {
+  .wood-panel {
+    border-width: 30px;
+    border-image-width: 30px;
+    gap: 6px;
+  }
+
+  .menu-title img {
+    width: 190px;
+  }
+
+  .tagline,
+  .menu-panel > .panel-note {
+    display: none;
+  }
+
+  .menu-actions {
+    flex-direction: row;
+  }
+
+  .menu-panel .game-button {
+    min-width: 170px;
+    min-height: 46px;
+    font-size: 16px;
+  }
+
+  .controls-help {
+    padding: 4px 12px;
+  }
 }
