@@ -252,7 +252,11 @@ export class GameSession {
 
   private flush() {
     this.handleEvents(this.simulation.drainEvents());
+    const before = this.hud.get().remainingSeconds;
     this.hud.set(this.readHud());
+    const after = this.hud.get().remainingSeconds;
+    // aviso sonoro nos últimos 10 segundos, uma vez por segundo
+    if (after !== before && after <= 10 && after > 0 && this.state.phase === "running") sounds.play("time_warning");
   }
 
   private handleEvents(events: GameEvent[]) {

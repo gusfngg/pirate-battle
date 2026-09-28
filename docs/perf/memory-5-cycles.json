@@ -1,0 +1,98 @@
+{
+  "environment": {
+    "date": "2026-09-28T23:28:25.535Z",
+    "cpu": "Apple M4",
+    "cores": 10,
+    "memoryGb": 16,
+    "os": "Darwin 27.0.0",
+    "browser": "Chromium 153.0.8010.12",
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "viewport": {
+      "width": 1600,
+      "height": 900,
+      "devicePixelRatio": 2
+    }
+  },
+  "readings": [
+    {
+      "label": "menu before",
+      "heapMb": 4.69,
+      "domNodes": 133,
+      "listeners": 183,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 1 in match",
+      "heapMb": 8.74,
+      "domNodes": 141,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 1 back in menu",
+      "heapMb": 7.76,
+      "domNodes": 137,
+      "listeners": 197,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 2 in match",
+      "heapMb": 9.44,
+      "domNodes": 141,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 2 back in menu",
+      "heapMb": 8.09,
+      "domNodes": 137,
+      "listeners": 197,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 3 in match",
+      "heapMb": 9.44,
+      "domNodes": 141,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 3 back in menu",
+      "heapMb": 8.27,
+      "domNodes": 137,
+      "listeners": 197,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 4 in match",
+      "heapMb": 9.54,
+      "domNodes": 141,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 4 back in menu",
+      "heapMb": 8.37,
+      "domNodes": 137,
+      "listeners": 197,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 5 in match",
+      "heapMb": 9.9,
+      "domNodes": 141,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 5 back in menu",
+      "heapMb": 8.56,
+      "domNodes": 137,
+      "listeners": 197,
+      "canvases": 0
+    }
+  ],
+  "growthAfterFirstCycleMb": 0.8,
+  "listenerGrowth": 0,
+  "domNodeGrowth": 0
+}

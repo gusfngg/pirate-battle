@@ -1,12 +1,15 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { useMatchSync } from "@/api/queries";
 import { NetworkLab } from "@/mocks/NetworkLab";
-import { PlayScreen } from "@/play/PlayScreen";
+import { SoundToggle } from "@/ui/SoundToggle";
 import { LogbookScreen } from "@/screens/LogbookScreen";
 import { MenuScreen } from "@/screens/MenuScreen";
 import { OptionsScreen } from "@/screens/OptionsScreen";
 import { ResultScreen } from "@/screens/ResultScreen";
 import { useRoute, type Route } from "./router";
+
+// o pixi só é baixado quando a partida começa, os menus abrem mais leves
+const PlayScreen = lazy(() => import("@/play/PlayScreen").then((module) => ({ default: module.PlayScreen })));
 
 const TITLES: Record<Route, string> = {
   menu: "Pirate Battle",
@@ -39,10 +42,28 @@ export function App() {
       {route === "menu" && <MenuScreen />}
       {route === "options" && <OptionsScreen />}
       {(route === "ranking" || route === "history") && <LogbookScreen tab={route} />}
-      {route === "play" && <PlayScreen key="play" />}
+      {route === "play" && (
+        <Suspense fallback={<LoadingScreen />}>
+          <PlayScreen key="play" />
+        </Suspense>
+      )}
       {route === "result" && <ResultScreen />}
       {route !== "play" && <NetworkLab />}
+      {route !== "play" && <SoundToggle className="sound-toggle--corner" />}
       <img className="brand" src="/game/logo_jungle_gaming.svg" alt="Jungle Gaming" />
     </>
+  );
+}
+
+function LoadingScreen() {
+  return (
+    <main className="screen screen--menu">
+      <div className="wood-panel loading-panel">
+        <h1 className="panel-title">Setting sail</h1>
+        <p className="panel-note" role="status">
+          Preparing the fleet…
+        </p>
+      </div>
+    </main>
   );
 }

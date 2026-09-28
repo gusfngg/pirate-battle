@@ -1,3 +1,4 @@
+import { createStore } from "@/lib/store";
 import type { GameEvent, MatchState } from "../sim/types";
 
 const SOUND_NAMES = [
@@ -59,7 +60,11 @@ class SoundBoard {
   private loading: Promise<void> | null = null;
   private loopsMuted = false;
   private lastPlayed = new Map<SoundName, number>();
-  muted = readMuted();
+  readonly settings = createStore({ muted: readMuted() });
+
+  get muted() {
+    return this.settings.get().muted;
+  }
 
   unlock() {
     if (typeof window === "undefined" || !("AudioContext" in window)) return;
@@ -74,7 +79,7 @@ class SoundBoard {
   }
 
   setMuted(muted: boolean) {
-    this.muted = muted;
+    this.settings.set({ muted });
     try {
       localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
     } catch {

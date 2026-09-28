@@ -1,0 +1,238 @@
+{
+  "environment": {
+    "date": "2026-09-28T23:34:17.874Z",
+    "cpu": "Apple M4",
+    "cores": 10,
+    "memoryGb": 16,
+    "os": "Darwin 27.0.0",
+    "browser": "Chromium 153.0.8010.12",
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "viewport": {
+      "width": 1600,
+      "height": 900,
+      "devicePixelRatio": 2
+    }
+  },
+  "readings": [
+    {
+      "label": "menu before",
+      "heapMb": 3.57,
+      "domNodes": 121,
+      "listeners": 184,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 1 in match",
+      "heapMb": 8.18,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 1 back in menu",
+      "heapMb": 7.49,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 2 in match",
+      "heapMb": 9.3,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 2 back in menu",
+      "heapMb": 7.84,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 3 in match",
+      "heapMb": 8.94,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 3 back in menu",
+      "heapMb": 8.04,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 4 in match",
+      "heapMb": 9.11,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 4 back in menu",
+      "heapMb": 8.18,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 5 in match",
+      "heapMb": 9.33,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 5 back in menu",
+      "heapMb": 8.35,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 6 in match",
+      "heapMb": 9.36,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 6 back in menu",
+      "heapMb": 8.42,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 7 in match",
+      "heapMb": 10.26,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 7 back in menu",
+      "heapMb": 8.45,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 8 in match",
+      "heapMb": 10.03,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 8 back in menu",
+      "heapMb": 8.5,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 9 in match",
+      "heapMb": 9.77,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 9 back in menu",
+      "heapMb": 8.84,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 10 in match",
+      "heapMb": 9.84,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 10 back in menu",
+      "heapMb": 8.89,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 11 in match",
+      "heapMb": 9.88,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 11 back in menu",
+      "heapMb": 8.92,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 12 in match",
+      "heapMb": 10.48,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 12 back in menu",
+      "heapMb": 8.94,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 13 in match",
+      "heapMb": 10.5,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 13 back in menu",
+      "heapMb": 8.96,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 14 in match",
+      "heapMb": 10.52,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 14 back in menu",
+      "heapMb": 9,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 15 in match",
+      "heapMb": 10.55,
+      "domNodes": 135,
+      "listeners": 228,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 15 back in menu",
+      "heapMb": 9.02,
+      "domNodes": 135,
+      "listeners": 198,
+      "canvases": 0
+    }
+  ],
+  "growthAfterFirstCycleMb": 1.53,
+  "listenerGrowth": 0,
+  "domNodeGrowth": 0
+}

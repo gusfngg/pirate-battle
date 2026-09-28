@@ -1,0 +1,430 @@
+{
+  "environment": {
+    "date": "2026-09-28T23:35:33.600Z",
+    "cpu": "Apple M4",
+    "cores": 10,
+    "memoryGb": 16,
+    "os": "Darwin 27.0.0",
+    "browser": "Chromium 153.0.8010.12",
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "viewport": {
+      "width": 1600,
+      "height": 900,
+      "devicePixelRatio": 2
+    }
+  },
+  "match": {
+    "sessionSeconds": 180,
+    "spawnSeconds": 1,
+    "measuredSeconds": 54,
+    "phaseAtEnd": "running",
+    "score": 8,
+    "spawned": {
+      "chaser": 24,
+      "shooter": 16
+    }
+  },
+  "frames": {
+    "frames": 3250,
+    "averageFps": 60,
+    "p50FrameMs": 16.7,
+    "p95FrameMs": 16.7,
+    "p99FrameMs": 16.8,
+    "worstFrameMs": 16.8,
+    "slowFrames": 0
+  },
+  "entities": {
+    "peak": {
+      "enemies": 10,
+      "projectiles": 7,
+      "effects": 36,
+      "ships": 11
+    },
+    "average": {
+      "enemies": 8.4,
+      "projectiles": 1.7,
+      "effects": 16.3,
+      "ships": 9.4
+    },
+    "perSecond": [
+      {
+        "second": 0,
+        "enemies": 0,
+        "projectiles": 2,
+        "effects": 2,
+        "ships": 1
+      },
+      {
+        "second": 1,
+        "enemies": 1,
+        "projectiles": 0,
+        "effects": 7,
+        "ships": 2
+      },
+      {
+        "second": 2,
+        "enemies": 2,
+        "projectiles": 2,
+        "effects": 4,
+        "ships": 3
+      },
+      {
+        "second": 3,
+        "enemies": 3,
+        "projectiles": 2,
+        "effects": 1,
+        "ships": 4
+      },
+      {
+        "second": 4,
+        "enemies": 4,
+        "projectiles": 1,
+        "effects": 7,
+        "ships": 5
+      },
+      {
+        "second": 5,
+        "enemies": 5,
+        "projectiles": 2,
+        "effects": 2,
+        "ships": 6
+      },
+      {
+        "second": 6,
+        "enemies": 6,
+        "projectiles": 2,
+        "effects": 1,
+        "ships": 7
+      },
+      {
+        "second": 7,
+        "enemies": 7,
+        "projectiles": 2,
+        "effects": 6,
+        "ships": 8
+      },
+      {
+        "second": 8,
+        "enemies": 8,
+        "projectiles": 1,
+        "effects": 6,
+        "ships": 9
+      },
+      {
+        "second": 9,
+        "enemies": 8,
+        "projectiles": 2,
+        "effects": 18,
+        "ships": 9
+      },
+      {
+        "second": 10,
+        "enemies": 7,
+        "projectiles": 1,
+        "effects": 29,
+        "ships": 8
+      },
+      {
+        "second": 11,
+        "enemies": 8,
+        "projectiles": 4,
+        "effects": 11,
+        "ships": 9
+      },
+      {
+        "second": 12,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 5,
+        "ships": 10
+      },
+      {
+        "second": 13,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 27,
+        "ships": 10
+      },
+      {
+        "second": 14,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 2,
+        "ships": 11
+      },
+      {
+        "second": 15,
+        "enemies": 10,
+        "projectiles": 1,
+        "effects": 13,
+        "ships": 11
+      },
+      {
+        "second": 16,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 30,
+        "ships": 10
+      },
+      {
+        "second": 17,
+        "enemies": 8,
+        "projectiles": 2,
+        "effects": 36,
+        "ships": 9
+      },
+      {
+        "second": 18,
+        "enemies": 8,
+        "projectiles": 2,
+        "effects": 21,
+        "ships": 9
+      },
+      {
+        "second": 19,
+        "enemies": 9,
+        "projectiles": 2,
+        "effects": 19,
+        "ships": 10
+      },
+      {
+        "second": 20,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 19,
+        "ships": 11
+      },
+      {
+        "second": 21,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 22,
+        "ships": 11
+      },
+      {
+        "second": 22,
+        "enemies": 10,
+        "projectiles": 1,
+        "effects": 15,
+        "ships": 11
+      },
+      {
+        "second": 23,
+        "enemies": 9,
+        "projectiles": 2,
+        "effects": 32,
+        "ships": 10
+      },
+      {
+        "second": 24,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 21,
+        "ships": 10
+      },
+      {
+        "second": 25,
+        "enemies": 9,
+        "projectiles": 0,
+        "effects": 34,
+        "ships": 10
+      },
+      {
+        "second": 26,
+        "enemies": 10,
+        "projectiles": 1,
+        "effects": 16,
+        "ships": 11
+      },
+      {
+        "second": 27,
+        "enemies": 10,
+        "projectiles": 1,
+        "effects": 3,
+        "ships": 11
+      },
+      {
+        "second": 28,
+        "enemies": 9,
+        "projectiles": 0,
+        "effects": 24,
+        "ships": 10
+      },
+      {
+        "second": 29,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 17,
+        "ships": 10
+      },
+      {
+        "second": 30,
+        "enemies": 9,
+        "projectiles": 0,
+        "effects": 27,
+        "ships": 10
+      },
+      {
+        "second": 31,
+        "enemies": 9,
+        "projectiles": 0,
+        "effects": 21,
+        "ships": 10
+      },
+      {
+        "second": 32,
+        "enemies": 9,
+        "projectiles": 2,
+        "effects": 29,
+        "ships": 10
+      },
+      {
+        "second": 33,
+        "enemies": 9,
+        "projectiles": 3,
+        "effects": 13,
+        "ships": 10
+      },
+      {
+        "second": 34,
+        "enemies": 10,
+        "projectiles": 1,
+        "effects": 14,
+        "ships": 11
+      },
+      {
+        "second": 35,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 12,
+        "ships": 11
+      },
+      {
+        "second": 36,
+        "enemies": 10,
+        "projectiles": 3,
+        "effects": 12,
+        "ships": 11
+      },
+      {
+        "second": 37,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 22,
+        "ships": 10
+      },
+      {
+        "second": 38,
+        "enemies": 9,
+        "projectiles": 5,
+        "effects": 17,
+        "ships": 10
+      },
+      {
+        "second": 39,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 25,
+        "ships": 10
+      },
+      {
+        "second": 40,
+        "enemies": 9,
+        "projectiles": 3,
+        "effects": 31,
+        "ships": 10
+      },
+      {
+        "second": 41,
+        "enemies": 10,
+        "projectiles": 1,
+        "effects": 6,
+        "ships": 11
+      },
+      {
+        "second": 42,
+        "enemies": 10,
+        "projectiles": 7,
+        "effects": 17,
+        "ships": 11
+      },
+      {
+        "second": 43,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 9,
+        "ships": 11
+      },
+      {
+        "second": 44,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 25,
+        "ships": 10
+      },
+      {
+        "second": 45,
+        "enemies": 10,
+        "projectiles": 3,
+        "effects": 11,
+        "ships": 11
+      },
+      {
+        "second": 46,
+        "enemies": 9,
+        "projectiles": 1,
+        "effects": 25,
+        "ships": 10
+      },
+      {
+        "second": 47,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 3,
+        "ships": 11
+      },
+      {
+        "second": 48,
+        "enemies": 10,
+        "projectiles": 4,
+        "effects": 12,
+        "ships": 11
+      },
+      {
+        "second": 49,
+        "enemies": 10,
+        "projectiles": 0,
+        "effects": 12,
+        "ships": 11
+      },
+      {
+        "second": 50,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 32,
+        "ships": 11
+      },
+      {
+        "second": 51,
+        "enemies": 10,
+        "projectiles": 2,
+        "effects": 10,
+        "ships": 11
+      },
+      {
+        "second": 52,
+        "enemies": 10,
+        "projectiles": 0,
+        "effects": 35,
+        "ships": 11
+      },
+      {
+        "second": 53,
+        "enemies": 10,
+        "projectiles": 1,
+        "effects": 12,
+        "ships": 11
+      }
+    ]
+  }
+}

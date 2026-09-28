@@ -9,6 +9,7 @@ import { installTestBridge } from "@/game/testing/test-bridge";
 import { useStore } from "@/lib/store";
 import { GameButton } from "@/ui/controls";
 import { Dialog } from "@/ui/Dialog";
+import { SoundToggle } from "@/ui/SoundToggle";
 import { Hud } from "./Hud";
 import { finishMatch } from "./finish-match";
 import { TouchControls } from "./TouchControls";
@@ -169,6 +170,7 @@ function PlayOverlay({ session }: { session: GameSession }) {
           <GameButton onClick={() => session.restart()}>Restart</GameButton>
           <GameButton onClick={() => navigate("menu")}>Main menu</GameButton>
         </div>
+        <SoundToggle />
       </Dialog>
 
       {portrait ? (
