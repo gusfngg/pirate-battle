@@ -9,6 +9,8 @@
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
     "noEmit": true,
     "skipLibCheck": true,
     "strict": true,

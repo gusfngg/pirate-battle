@@ -7,7 +7,8 @@ import type { Ship } from "./types";
 import { fireBow } from "./weapons";
 
 const LOOK_AHEAD = 110;
-const WHISKER_ANGLE = 0.6;
+const FAN_STEP = 0.35;
+const FAN_STEPS = 9;
 
 function isBlocked(context: SimContext, ship: Ship, angle: number, reach: number) {
   const x = ship.x + Math.cos(angle) * reach;
@@ -17,19 +18,42 @@ function isBlocked(context: SimContext, ship: Ship, angle: number, reach: number
   return outside || hitsAnyObstacle(context.obstacles, x, y, ship.radius * 0.8);
 }
 
-// segue o rumo, mas contorna ilhas usando duas sondas (bigodes)
+function isClear(context: SimContext, ship: Ship, angle: number) {
+  return !isBlocked(context, ship, angle, LOOK_AHEAD) && !isBlocked(context, ship, angle, LOOK_AHEAD * 0.5);
+}
+
+// segue o rumo; se tiver ilha na frente, abre um leque de direções e contorna sempre pelo mesmo lado
 function avoidObstacles(context: SimContext, ship: Ship, desired: number) {
-  if (!isBlocked(context, ship, desired, LOOK_AHEAD)) return desired;
+  if (isClear(context, ship, desired)) {
+    ship.detour = 0;
+    return desired;
+  }
 
-  const leftClear = !isBlocked(context, ship, desired - WHISKER_ANGLE, LOOK_AHEAD);
-  const rightClear = !isBlocked(context, ship, desired + WHISKER_ANGLE, LOOK_AHEAD);
+  // primeira vez bloqueado: escolhe o lado com o menor desvio livre
+  if (ship.detour === 0) {
+    const leftTurn = Math.abs(angleDifference(ship.angle, desired - FAN_STEP));
+    const rightTurn = Math.abs(angleDifference(ship.angle, desired + FAN_STEP));
+    const sides = leftTurn < rightTurn ? [-1, 1] : [1, -1];
+    for (let step = 1; step <= FAN_STEPS && ship.detour === 0; step++) {
+      for (const side of sides) {
+        if (isClear(context, ship, desired + side * step * FAN_STEP)) {
+          ship.detour = side;
+          break;
+        }
+      }
+    }
+    if (ship.detour === 0) ship.detour = sides[0]!;
+  }
 
-  if (leftClear && !rightClear) return desired - WHISKER_ANGLE * 1.4;
-  if (rightClear && !leftClear) return desired + WHISKER_ANGLE * 1.4;
-  if (leftClear && rightClear) {
-    const leftTurn = Math.abs(angleDifference(ship.angle, desired - WHISKER_ANGLE));
-    const rightTurn = Math.abs(angleDifference(ship.angle, desired + WHISKER_ANGLE));
-    return desired + (leftTurn < rightTurn ? -WHISKER_ANGLE : WHISKER_ANGLE) * 1.4;
+  // esgota o lado escolhido antes de tentar o outro, senão o navio fica indo e voltando
+  for (const side of [ship.detour, -ship.detour]) {
+    for (let step = 1; step <= FAN_STEPS; step++) {
+      const angle = wrapAngle(desired + side * step * FAN_STEP);
+      if (isClear(context, ship, angle)) {
+        ship.detour = side;
+        return angle;
+      }
+    }
   }
   return wrapAngle(ship.angle + Math.PI * 0.75);
 }

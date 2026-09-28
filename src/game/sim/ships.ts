@@ -28,6 +28,7 @@ export function createShip(id: number, kind: ShipKind, x: number, y: number, ang
     radius: hull.radius,
     alive: true,
     cooldowns: { front: 0, left: 0, right: 0 },
+    detour: 0,
   };
 }
 
@@ -50,29 +51,33 @@ export function steer(ship: Ship, hull: HullConfig, helm: Helm, dt: number) {
 
 // anda na direção da proa e depois resolve ilhas, pedras e borda da arena
 export function sail(ship: Ship, dt: number, context: SimContext) {
-  ship.x += Math.cos(ship.angle) * ship.speed * dt;
-  ship.y += Math.sin(ship.angle) * ship.speed * dt;
+  const headingX = Math.cos(ship.angle);
+  const headingY = Math.sin(ship.angle);
+  ship.x += headingX * ship.speed * dt;
+  ship.y += headingY * ship.speed * dt;
 
-  let bumped = false;
+  // quanto do movimento vai de frente contra o obstáculo: 0 raspando de lado, 1 batendo de proa
+  let impact = 0;
   for (const obstacle of context.obstacles) {
     const contact = findContact(obstacle, ship.x, ship.y, ship.radius);
     if (!contact) continue;
     ship.x += contact.normalX * contact.depth;
     ship.y += contact.normalY * contact.depth;
-    bumped = true;
+    impact = Math.max(impact, -(headingX * contact.normalX + headingY * contact.normalY));
   }
 
   const { width, height } = context.config.arena;
   const clampedX = clamp(ship.x, ship.radius, width - ship.radius);
   const clampedY = clamp(ship.y, ship.radius, height - ship.radius);
-  if (clampedX !== ship.x || clampedY !== ship.y) bumped = true;
+  if (clampedX !== ship.x) impact = Math.max(impact, Math.abs(headingX));
+  if (clampedY !== ship.y) impact = Math.max(impact, Math.abs(headingY));
   ship.x = clampedX;
   ship.y = clampedY;
 
-  if (bumped) {
-    const wasFast = ship.speed > 40;
-    ship.speed *= 0.55;
-    if (wasFast) context.emit({ type: "bump", shipId: ship.id, x: ship.x, y: ship.y });
+  if (impact > 0) {
+    const hard = ship.speed * impact > 40;
+    ship.speed *= 1 - 0.45 * impact;
+    if (hard) context.emit({ type: "bump", shipId: ship.id, x: ship.x, y: ship.y });
   }
 }
 

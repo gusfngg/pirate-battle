@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { playerStore, renameCaptain, validateCaptainName } from "@/api/player";
 import { optionsStore, saveOptions } from "@/app/preferences";
 import { navigate } from "@/app/router";
 import { OPTION_LIMITS, type MatchOptions } from "@/game/config";
@@ -30,14 +31,18 @@ export function OptionsScreen() {
     sessionSeconds: String(saved.sessionSeconds),
     spawnSeconds: String(saved.spawnSeconds),
   });
+  const savedName = useStore(playerStore, (player) => player.playerName);
+  const [name, setName] = useState(savedName);
   const [notice, setNotice] = useState("");
+  const nameError = validateCaptainName(name);
 
   const errors: Record<Field, string | null> = {
     sessionSeconds: validateOption("sessionSeconds", draft.sessionSeconds),
     spawnSeconds: validateOption("spawnSeconds", draft.spawnSeconds),
   };
-  const valid = !errors.sessionSeconds && !errors.spawnSeconds;
-  const dirty = Number(draft.sessionSeconds) !== saved.sessionSeconds || Number(draft.spawnSeconds) !== saved.spawnSeconds;
+  const valid = !errors.sessionSeconds && !errors.spawnSeconds && !nameError;
+  const dirty =
+    Number(draft.sessionSeconds) !== saved.sessionSeconds || Number(draft.spawnSeconds) !== saved.spawnSeconds || name.trim() !== savedName;
 
   function change(key: Field, value: string) {
     setDraft((current) => ({ ...current, [key]: value }));
@@ -55,7 +60,8 @@ export function OptionsScreen() {
   function submit(event: FormEvent) {
     event.preventDefault();
     if (!valid) return;
-    const stored = saveOptions({ sessionSeconds: Number(draft.sessionSeconds), spawnSeconds: Number(draft.spawnSeconds) });
+    const stored =
+      saveOptions({ sessionSeconds: Number(draft.sessionSeconds), spawnSeconds: Number(draft.spawnSeconds) }) && renameCaptain(name);
     setNotice(stored ? "Options saved. They apply to your next battle." : "Options apply now, but this browser blocked saving them.");
   }
 
@@ -67,6 +73,32 @@ export function OptionsScreen() {
         </h1>
 
         <form className="options-form" onSubmit={submit} noValidate>
+          <div className="option-field">
+            <label htmlFor="option-captain">Captain name</label>
+            <input
+              id="option-captain"
+              className="text-input"
+              name="captain"
+              autoComplete="nickname"
+              maxLength={18}
+              value={name}
+              aria-invalid={nameError ? true : undefined}
+              aria-describedby={nameError ? "error-captain" : "hint-captain"}
+              onChange={(event) => {
+                setName(event.target.value);
+                setNotice("");
+              }}
+            />
+            {nameError ? (
+              <p className="option-error" id="error-captain" role="alert">
+                {nameError}
+              </p>
+            ) : (
+              <p className="option-hint" id="hint-captain">
+                Shown next to your battles in the ranking.
+              </p>
+            )}
+          </div>
           {FIELDS.map(({ key, label, unit }) => {
             const limits = OPTION_LIMITS[key];
             const error = errors[key];

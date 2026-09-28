@@ -17,6 +17,8 @@ export interface Ship {
   radius: number;
   alive: boolean;
   cooldowns: Record<Weapon, number>;
+  // lado escolhido pra contornar obstáculos: -1, 0 (rumo livre) ou 1
+  detour: number;
 }
 
 export interface Projectile {
