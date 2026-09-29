@@ -72,28 +72,27 @@ test.describe("navigation", () => {
 test.describe("touch controls", () => {
   test.skip(({ isMobile }) => !isMobile, "touch controls only show on coarse pointers");
 
-  test("the on screen helm and cannons drive the ship", async ({ page }) => {
+  test("the steering stick and the cannons drive the ship", async ({ page }) => {
     await openApp(page, { storage: { "pirate-battle:options": { sessionSeconds: 120, spawnSeconds: 10 } } });
     await startMatch(page);
-    await expect(page.getByTestId("touch-forward")).toBeVisible();
-    await expect(page.getByTestId("touch-fireFront")).toBeVisible();
-
-    const before = await readState(page);
-    const forward = page.getByTestId("touch-forward");
-    const turn = page.getByTestId("touch-turnRight");
+    const stick = page.getByTestId("touch-stick");
     const fire = page.getByTestId("touch-fireFront");
+    await expect(stick).toBeVisible();
+    await expect(fire).toBeVisible();
 
-    // dois dedos ao mesmo tempo: navegar e virar
-    await forward.dispatchEvent("pointerdown", { pointerId: 11, pointerType: "touch", isPrimary: true });
-    await turn.dispatchEvent("pointerdown", { pointerId: 12, pointerType: "touch" });
-    await fire.dispatchEvent("pointerdown", { pointerId: 13, pointerType: "touch" });
-    const moving = await advance(page, 1000);
-    await forward.dispatchEvent("pointerup", { pointerId: 11, pointerType: "touch" });
-    await turn.dispatchEvent("pointerup", { pointerId: 12, pointerType: "touch" });
-    await fire.dispatchEvent("pointerup", { pointerId: 13, pointerType: "touch" });
+    // polegar esquerdo encosta e arrasta pra direita, o direito segura o canhão ao mesmo tempo
+    const zone = (await stick.boundingBox())!;
+    const start = { x: zone.x + 120, y: zone.y + zone.height - 120 };
+    await stick.dispatchEvent("pointerdown", { pointerId: 11, pointerType: "touch", isPrimary: true, clientX: start.x, clientY: start.y });
+    await stick.dispatchEvent("pointermove", { pointerId: 11, pointerType: "touch", clientX: start.x + 80, clientY: start.y });
+    await fire.dispatchEvent("pointerdown", { pointerId: 12, pointerType: "touch" });
+    const moving = await advance(page, 1200);
+    await fire.dispatchEvent("pointerup", { pointerId: 12, pointerType: "touch" });
+    await stick.dispatchEvent("pointerup", { pointerId: 11, pointerType: "touch", clientX: start.x + 80, clientY: start.y });
 
     expect(moving.player.speed).toBeGreaterThan(100);
-    expect(moving.player.angle).toBeGreaterThan(before.player.angle + 0.5);
+    expect(Math.abs(moving.player.angle)).toBeLessThan(0.3);
+    expect(moving.player.x).toBeGreaterThan(830);
     expect(moving.projectiles.some((ball) => ball.side === "player")).toBe(true);
 
     const released = await advance(page, 3000);

@@ -56,9 +56,9 @@ None. The game has no backend: ranking and history live behind MSW mocks that ru
 
 | Action | Keyboard | Touch |
 | --- | --- | --- |
-| Sail forward | `W` or `↑` | Up arrow button (left cluster) |
-| Turn left / right | `A` `D` or `←` `→` | Curved arrow buttons (left cluster) |
-| Bow cannon (one ball) | `Space` or `K` | Middle button (right cluster) |
+| Sail forward | `W` or `↑` | Steering stick (left half of the screen): drag toward where you want to go, further means faster |
+| Turn left / right | `A` `D` or `←` `→` | Same stick: the bow turns toward the drag direction by itself |
+| Bow cannon (one ball) | `Space` or `K` | Top button (right cluster) |
 | Left broadside (three balls) | `Q` or `J` | Left cannon button |
 | Right broadside (three balls) | `E` or `L` | Right cannon button |
 | Pause | `Esc` or `P` | Pause button, top right |

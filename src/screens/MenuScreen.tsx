@@ -39,7 +39,7 @@ export function MenuScreen() {
               </div>
             ))}
           </dl>
-          <p>On touch screens, use the helm buttons on the left and the cannons on the right. Sink enemy ships for one point each.</p>
+          <p>On touch screens, drag your left thumb toward where the ship should sail and fire with the cannons on the right. Sink enemy ships for one point each.</p>
         </details>
 
         <p className="panel-note">Navigate the islands. Survive the battle.</p>

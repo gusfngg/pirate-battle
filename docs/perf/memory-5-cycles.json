@@ -1,6 +1,6 @@
 {
   "environment": {
-    "date": "2026-09-28T23:28:25.535Z",
+    "date": "2026-09-29T12:38:59.548Z",
     "cpu": "Apple M4",
     "cores": 10,
     "memoryGb": 16,
@@ -16,83 +16,83 @@
   "readings": [
     {
       "label": "menu before",
-      "heapMb": 4.69,
-      "domNodes": 133,
-      "listeners": 183,
+      "heapMb": 3.58,
+      "domNodes": 121,
+      "listeners": 184,
       "canvases": 0
     },
     {
       "label": "cycle 1 in match",
-      "heapMb": 8.74,
-      "domNodes": 141,
+      "heapMb": 8.68,
+      "domNodes": 135,
       "listeners": 228,
       "canvases": 1
     },
     {
       "label": "cycle 1 back in menu",
-      "heapMb": 7.76,
-      "domNodes": 137,
-      "listeners": 197,
+      "heapMb": 7.68,
+      "domNodes": 135,
+      "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 2 in match",
-      "heapMb": 9.44,
-      "domNodes": 141,
+      "heapMb": 9.02,
+      "domNodes": 135,
       "listeners": 228,
       "canvases": 1
     },
     {
       "label": "cycle 2 back in menu",
-      "heapMb": 8.09,
-      "domNodes": 137,
-      "listeners": 197,
+      "heapMb": 8,
+      "domNodes": 135,
+      "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 3 in match",
-      "heapMb": 9.44,
-      "domNodes": 141,
+      "heapMb": 9.26,
+      "domNodes": 135,
       "listeners": 228,
       "canvases": 1
     },
     {
       "label": "cycle 3 back in menu",
-      "heapMb": 8.27,
-      "domNodes": 137,
-      "listeners": 197,
+      "heapMb": 8.19,
+      "domNodes": 135,
+      "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 4 in match",
-      "heapMb": 9.54,
-      "domNodes": 141,
+      "heapMb": 9.96,
+      "domNodes": 135,
       "listeners": 228,
       "canvases": 1
     },
     {
       "label": "cycle 4 back in menu",
-      "heapMb": 8.37,
-      "domNodes": 137,
-      "listeners": 197,
+      "heapMb": 8.33,
+      "domNodes": 135,
+      "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 5 in match",
-      "heapMb": 9.9,
-      "domNodes": 141,
+      "heapMb": 10.13,
+      "domNodes": 135,
       "listeners": 228,
       "canvases": 1
     },
     {
       "label": "cycle 5 back in menu",
-      "heapMb": 8.56,
-      "domNodes": 137,
-      "listeners": 197,
+      "heapMb": 8.52,
+      "domNodes": 135,
+      "listeners": 198,
       "canvases": 0
     }
   ],
-  "growthAfterFirstCycleMb": 0.8,
+  "growthAfterFirstCycleMb": 0.84,
   "listenerGrowth": 0,
   "domNodeGrowth": 0
 }

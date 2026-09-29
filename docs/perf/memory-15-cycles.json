@@ -1,6 +1,6 @@
 {
   "environment": {
-    "date": "2026-09-28T23:34:17.874Z",
+    "date": "2026-09-29T12:42:17.277Z",
     "cpu": "Apple M4",
     "cores": 10,
     "memoryGb": 16,
@@ -16,223 +16,223 @@
   "readings": [
     {
       "label": "menu before",
-      "heapMb": 3.57,
+      "heapMb": 3.58,
       "domNodes": 121,
       "listeners": 184,
       "canvases": 0
     },
     {
       "label": "cycle 1 in match",
-      "heapMb": 8.18,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 8.48,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 1 back in menu",
-      "heapMb": 7.49,
+      "heapMb": 7.54,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 2 in match",
-      "heapMb": 9.3,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 8.78,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 2 back in menu",
-      "heapMb": 7.84,
+      "heapMb": 7.89,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 3 in match",
-      "heapMb": 8.94,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 9.39,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 3 back in menu",
-      "heapMb": 8.04,
+      "heapMb": 8.11,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 4 in match",
-      "heapMb": 9.11,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 9.52,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 4 back in menu",
-      "heapMb": 8.18,
+      "heapMb": 8.23,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 5 in match",
-      "heapMb": 9.33,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 9.73,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 5 back in menu",
-      "heapMb": 8.35,
+      "heapMb": 8.43,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 6 in match",
-      "heapMb": 9.36,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 9.78,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 6 back in menu",
-      "heapMb": 8.42,
+      "heapMb": 8.46,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 7 in match",
-      "heapMb": 10.26,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 9.86,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 7 back in menu",
-      "heapMb": 8.45,
-      "domNodes": 135,
-      "listeners": 198,
-      "canvases": 0
-    },
-    {
-      "label": "cycle 8 in match",
-      "heapMb": 10.03,
-      "domNodes": 135,
-      "listeners": 228,
-      "canvases": 1
-    },
-    {
-      "label": "cycle 8 back in menu",
       "heapMb": 8.5,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
-      "label": "cycle 9 in match",
-      "heapMb": 9.77,
+      "label": "cycle 8 in match",
+      "heapMb": 9.89,
+      "domNodes": 132,
+      "listeners": 224,
+      "canvases": 1
+    },
+    {
+      "label": "cycle 8 back in menu",
+      "heapMb": 8.55,
       "domNodes": 135,
-      "listeners": 228,
+      "listeners": 198,
+      "canvases": 0
+    },
+    {
+      "label": "cycle 9 in match",
+      "heapMb": 10.14,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 9 back in menu",
-      "heapMb": 8.84,
+      "heapMb": 8.86,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 10 in match",
-      "heapMb": 9.84,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 10.27,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 10 back in menu",
-      "heapMb": 8.89,
+      "heapMb": 8.93,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 11 in match",
-      "heapMb": 9.88,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 10.32,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 11 back in menu",
-      "heapMb": 8.92,
+      "heapMb": 8.99,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 12 in match",
-      "heapMb": 10.48,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 10.37,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 12 back in menu",
-      "heapMb": 8.94,
+      "heapMb": 9.02,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 13 in match",
-      "heapMb": 10.5,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 10.38,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 13 back in menu",
-      "heapMb": 8.96,
+      "heapMb": 9.04,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 14 in match",
-      "heapMb": 10.52,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 10.38,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 14 back in menu",
-      "heapMb": 9,
+      "heapMb": 9.07,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     },
     {
       "label": "cycle 15 in match",
-      "heapMb": 10.55,
-      "domNodes": 135,
-      "listeners": 228,
+      "heapMb": 10.01,
+      "domNodes": 132,
+      "listeners": 224,
       "canvases": 1
     },
     {
       "label": "cycle 15 back in menu",
-      "heapMb": 9.02,
+      "heapMb": 9.09,
       "domNodes": 135,
       "listeners": 198,
       "canvases": 0
     }
   ],
-  "growthAfterFirstCycleMb": 1.53,
+  "growthAfterFirstCycleMb": 1.55,
   "listenerGrowth": 0,
   "domNodeGrowth": 0
 }

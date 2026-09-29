@@ -55,6 +55,8 @@ export interface Controls {
   fireFront: boolean;
   fireLeft: boolean;
   fireRight: boolean;
+  // joystick de toque: pra onde o jogador quer ir (ângulo do mundo) e com que força (0 a 1)
+  stick: { angle: number; power: number } | null;
 }
 
 export const IDLE_CONTROLS: Readonly<Controls> = Object.freeze({
@@ -64,6 +66,7 @@ export const IDLE_CONTROLS: Readonly<Controls> = Object.freeze({
   fireFront: false,
   fireLeft: false,
   fireRight: false,
+  stick: null,
 });
 
 export interface MatchState {

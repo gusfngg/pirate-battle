@@ -149,6 +149,33 @@ describe("handling", () => {
   });
 });
 
+describe("touch stick", () => {
+  it("turns the bow toward the stick and sails at the stick's strength", () => {
+    const match = createMatch();
+    const { player } = match.state;
+    // jogador olhando pra cima, polegar arrastado pra direita
+    run(match, 1.2, { stick: { angle: 0, power: 1 } });
+    expect(Math.abs(angleDifference(player.angle, 0))).toBeLessThan(0.15);
+    expect(player.speed).toBeGreaterThan(120);
+
+    run(match, 2, { stick: { angle: 0, power: 0.5 } });
+    expect(player.speed).toBeCloseTo(95, 0);
+  });
+
+  it("eases off the throttle to turn around first, and ignores a tiny nudge", () => {
+    const match = createMatch();
+    const { player } = match.state;
+    run(match, 0.3, { stick: { angle: Math.PI / 2, power: 1 } });
+    // alvo atrás da proa: vira quase parado em vez de sair em arco largo
+    expect(player.speed).toBeLessThan(60);
+
+    const still = createMatch();
+    run(still, 1, { stick: { angle: 0, power: 0.1 } });
+    expect(still.state.player.speed).toBe(0);
+    expect(still.state.player.angle).toBeCloseTo(UP);
+  });
+});
+
 describe("match end", () => {
   it("ends by time and freezes every system", () => {
     const match = createMatch({ sessionSeconds: 60, spawnSeconds: 3 });
