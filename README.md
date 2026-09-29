@@ -31,6 +31,7 @@ npm run dev                       # http://localhost:5173
 | `npm run preview` | Serves the production build on port 4173 |
 | `npm run lint` | ESLint over the whole project |
 | `npm run typecheck` | TypeScript project check (app, config and tests) |
+| `npm run test:unit` | Vitest unit tests for the pure simulation, collisions, fixed step loop, config and API contracts (well under a second) |
 | `npm run test:e2e` | Full Playwright suite, desktop and mobile Chromium, against the production build |
 | `npm run test:e2e:update` | Refreshes the visual baselines after an intended visual change |
 | `npm run test:e2e:report` | Opens the last HTML report |
@@ -106,6 +107,10 @@ Open **Network lab** (bottom left corner of every menu screen) to switch the moc
 5. **Pause without time drift.** Start a match, switch to another window or tab and come back. The battle is paused and the clock did not move; nothing resumes until you press **Resume**.
 
 ## Tests
+
+**Unit tests** (`npm run test:unit`, Vitest) run the simulation without a browser. Because the rules have no PixiJS or React dependency, a test can build a match, push inputs through `step()` and assert on the state: a broadside scores exactly one point, a ball damages once, a Chaser ramming you scores nothing, the end freezes every system, spawns respect the interval and the minimum distance, and the same seed replays the same match. Colliders, the fixed step loop, option validation and the ranking order have their own suites.
+
+**End to end tests** (`npm run test:e2e`, Playwright) cover the brief item by item.
 
 `npm run test:e2e` builds the production bundle, serves it and runs 56 scenarios on desktop Chromium (1280 x 720) and on a Pixel 7 in landscape. Combat tests press the real game keys (or dispatch real pointer events on the touch buttons) and advance the simulation through a manual clock exposed by the test bridge, so the rules, collisions and rendering run exactly as in the game while the timing stays reproducible. Every test starts from a fresh browser context, and any unexpected console error fails the test.
 

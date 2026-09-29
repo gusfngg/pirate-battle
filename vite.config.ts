@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
@@ -9,6 +10,11 @@ export default defineConfig({
   },
   server: { port: 5173 },
   preview: { port: 4173 },
+  // testes unitários só da lógica pura (simulação, colisões, contratos), sem navegador
+  test: {
+    include: ["src/**/*.test.ts"],
+    environment: "node",
+  },
   build: {
     target: "es2022",
     chunkSizeWarningLimit: 900,
