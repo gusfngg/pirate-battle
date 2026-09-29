@@ -1,5 +1,5 @@
 import type { GameConfig, HullConfig } from "../config";
-import { approach, clamp, wrapAngle } from "../math";
+import { angleDifference, approach, clamp, wrapAngle } from "../math";
 import { findContact } from "../world/obstacles";
 import type { SimContext } from "./context";
 import type { Ship, ShipKind } from "./types";
@@ -26,6 +26,8 @@ export function createShip(id: number, kind: ShipKind, x: number, y: number, ang
     prevY: y,
     prevAngle: angle,
     speed: 0,
+    turnRate: 0,
+    course: angle,
     health: hull.maxHealth,
     maxHealth: hull.maxHealth,
     radius: hull.radius,
@@ -43,11 +45,15 @@ export function coolDown(ship: Ship, dt: number) {
   ship.cooldowns.right = Math.max(0, ship.cooldowns.right - dt);
 }
 
-// navio parado ainda gira um pouco, pra sempre conseguir sair de enrascada
+// o leme ganha e perde força aos poucos; parado o navio ainda gira um pouco, pra sempre sair de enrascada
 export function steer(ship: Ship, hull: HullConfig, helm: Helm, dt: number) {
   const speedRatio = clamp(ship.speed / hull.maxSpeed, 0, 1);
   const rudder = 0.55 + 0.45 * speedRatio;
-  ship.angle = wrapAngle(ship.angle + helm.turn * hull.turnSpeed * rudder * dt);
+  const targetRate = clamp(helm.turn, -1, 1) * hull.turnSpeed * rudder;
+  ship.turnRate = approach(ship.turnRate, targetRate, hull.turnAcceleration * dt);
+  ship.angle = wrapAngle(ship.angle + ship.turnRate * dt);
+  // o deslocamento persegue a proa com atraso proporcional, é isso que dá a deriva nas curvas
+  ship.course = wrapAngle(ship.course + angleDifference(ship.course, ship.angle) * Math.min(1, hull.grip * dt));
 
   const targetSpeed = hull.maxSpeed * clamp(helm.throttle, 0, 1);
   const rate = targetSpeed > ship.speed ? hull.acceleration : hull.drag;
@@ -56,8 +62,8 @@ export function steer(ship: Ship, hull: HullConfig, helm: Helm, dt: number) {
 
 // anda na direção da proa e depois resolve ilhas, pedras e borda da arena
 export function sail(ship: Ship, dt: number, context: SimContext) {
-  const headingX = Math.cos(ship.angle);
-  const headingY = Math.sin(ship.angle);
+  const headingX = Math.cos(ship.course);
+  const headingY = Math.sin(ship.course);
   ship.x += headingX * ship.speed * dt;
   ship.y += headingY * ship.speed * dt;
 

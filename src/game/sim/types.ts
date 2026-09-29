@@ -16,6 +16,10 @@ export interface Ship {
   prevY: number;
   prevAngle: number;
   speed: number;
+  // velocidade de giro atual do leme (rad/s)
+  turnRate: number;
+  // direção em que o casco realmente se desloca, fica um pouco atrás da proa nas curvas
+  course: number;
   health: number;
   maxHealth: number;
   radius: number;

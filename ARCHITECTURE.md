@@ -43,7 +43,7 @@ Pirate Battle is split along one idea: **the simulation owns the truth, everythi
 
 ## Movement and collisions
 
-Ships have a heading, a scalar speed and a radius. Throttle accelerates towards the maximum speed, releasing it applies drag. Turning keeps 55% of the rudder even when standing still, so a ship can always point away from trouble.
+Ships have a heading (where the bow points), a course (where the hull actually travels), a scalar speed, a turn rate and a radius. Throttle accelerates towards the maximum speed, releasing it applies drag. The rudder has inertia: the turn rate climbs towards its maximum at `turnAcceleration` and eases back to zero after the key is released, so turns start and end in smooth arcs instead of snapping. Turning keeps 55% of the rudder even when standing still, so a ship can always point away from trouble. The course follows the heading with a lag set by `grip`, which gives the hull a small, readable drift in turns (about 15 degrees for the player at full speed and full rudder) and lines up again on a straight. All of it is per hull in the config, so handling is tuned without touching the systems.
 
 The world has two obstacle shapes, both built from the layout JSON in `src/game/world/`:
 
@@ -73,6 +73,8 @@ Projectiles are points with a small radius. Each step they move, then check the 
 **Layers**, from bottom to top: water (a `TilingSprite` that drifts slowly), foam wakes (one `Graphics` redrawn per frame), the static ground (shallows, island tiles, decor, rocks) baked once with `cacheAsTexture`, sinking wrecks and splashes, hulls, cannon balls with their trails, explosions and debris, and finally health bars, which live in their own layer so they never rotate with the hull.
 
 **Ships** swap textures by damage stage (intact, damaged, heavily damaged, wreck), show flickering fire from the damaged stage on, and flash red on a hit. The health bar crops a sub-texture of the fill art instead of scaling it, so the rounded end keeps its shape. The cropped texture is only rebuilt when health changes and the previous one is destroyed.
+
+**Interpolation.** The simulation stores every ship's and ball's pose from the previous step. The loop exposes how far the accumulator already is into the next step (`alpha`), and the renderer draws each object between its previous and current pose (angles through the shortest turn). On a 60 Hz screen this removes the judder of frames that get zero or two steps, and on 120 Hz or faster screens motion stays smooth while the rules still run at a fixed 60 Hz.
 
 **Cannon balls** come from a pool of sprites keyed by projectile id; a sprite goes back to the pool when its projectile disappears. **Effects** are short lived objects created from events and destroyed when their time runs out. They use a seeded random generator, so visual regression screenshots stay stable.
 
@@ -152,6 +154,7 @@ With `?e2e=1` the session uses a manual clock and `window.__pirate` exposes `get
 
 | Value | Number | Why |
 | --- | --- | --- |
+| Rudder and grip | player 10 rad/s² and 10, Chaser 9 and 12, Shooter 7 and 10 | The rudder reaches full turn in about a quarter of a second, responsive but no longer binary. Chasers grip harder so their rams stay honest, the heavy Shooter swings slowest |
 | Player health | 100 | Four Chaser rams or ten Shooter hits. A careless run lasts about 20 s, a careful one survives the whole clock |
 | Bow cannon | 34 damage, 0.4 s cooldown, 520 range | Precise and fast. Two shots sink a Chaser, three sink a Shooter |
 | Broadside | 3 x 34 damage, 1.1 s cooldown, 380 range | One full broadside sinks anything, but it asks you to turn side on, which is risky against Chasers |

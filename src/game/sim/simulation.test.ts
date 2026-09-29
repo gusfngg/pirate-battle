@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createMatchConfig, type MatchOptions } from "../config";
-import { distance } from "../math";
+import { angleDifference, distance } from "../math";
 import { ARENA_LAYOUT } from "../world/layout";
 import { Simulation } from "./simulation";
 import { IDLE_CONTROLS, type Controls, type GameEvent } from "./types";
@@ -68,7 +68,7 @@ describe("combat", () => {
 
   it("islands stop cannon balls", () => {
     const match = createMatch();
-    Object.assign(match.state.player, { x: 560, y: 660, angle: Math.PI });
+    Object.assign(match.state.player, { x: 560, y: 660, angle: Math.PI, course: Math.PI });
     const events = [...run(match, STEP, { fireFront: true }), ...run(match, 0.4)];
 
     expect(events).toContainEqual(expect.objectContaining({ type: "splash", onShore: true }));
@@ -79,7 +79,7 @@ describe("combat", () => {
 describe("movement", () => {
   it("a ship cannot sail through an island", () => {
     const match = createMatch();
-    Object.assign(match.state.player, { x: 256, y: 460, angle: UP });
+    Object.assign(match.state.player, { x: 256, y: 460, angle: UP, course: UP });
     run(match, 2.5, { forward: true });
     // a ilha palm-grove ocupa y 64..320
     expect(match.state.player.y).toBeGreaterThan(320);
@@ -87,7 +87,7 @@ describe("movement", () => {
 
   it("a ship stays inside the arena", () => {
     const match = createMatch();
-    Object.assign(match.state.player, { x: 1500, y: 700, angle: 0 });
+    Object.assign(match.state.player, { x: 1500, y: 700, angle: 0, course: 0 });
     run(match, 2.5, { forward: true });
     expect(match.state.player.x).toBeLessThanOrEqual(1600 - match.state.player.radius);
   });
@@ -116,6 +116,37 @@ describe("enemy navigation", () => {
       expect(hit).toBe(true);
     });
   }
+});
+
+describe("handling", () => {
+  it("the rudder builds up, then eases off after the key is released", () => {
+    const match = createMatch();
+    const { player } = match.state;
+    run(match, 0.05, { turnRight: true });
+    const early = player.turnRate;
+    run(match, 0.5, { turnRight: true });
+    expect(early).toBeGreaterThan(0);
+    expect(early).toBeLessThan(player.turnRate);
+
+    const released = player.angle;
+    run(match, 0.3);
+    // soltou a tecla: o casco ainda completa um pouco da curva antes de parar de girar
+    expect(angleDifference(released, player.angle)).toBeGreaterThan(0.02);
+    expect(player.turnRate).toBe(0);
+  });
+
+  it("the hull drifts a little behind the bow in a turn and lines up again on a straight", () => {
+    const match = createMatch();
+    const { player } = match.state;
+    run(match, 1.5, { forward: true });
+    run(match, 0.8, { forward: true, turnRight: true });
+    const drift = Math.abs(angleDifference(player.course, player.angle));
+    expect(drift).toBeGreaterThan(0.1);
+    expect(drift).toBeLessThan(0.4);
+
+    run(match, 1, { forward: true });
+    expect(Math.abs(angleDifference(player.course, player.angle))).toBeLessThan(0.01);
+  });
 });
 
 describe("match end", () => {

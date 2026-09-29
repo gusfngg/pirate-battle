@@ -19,6 +19,10 @@ export interface HullConfig {
   acceleration: number;
   drag: number;
   turnSpeed: number;
+  // quão rápido o leme chega no giro máximo (rad/s²), dá inércia às curvas
+  turnAcceleration: number;
+  // quão rápido a direção de deslocamento alcança a proa, menor = mais deriva nas curvas
+  grip: number;
 }
 
 export interface GameConfig {
@@ -77,6 +81,8 @@ export const BASE_CONFIG: GameConfig = {
     acceleration: 240,
     drag: 150,
     turnSpeed: 2.6,
+    turnAcceleration: 10,
+    grip: 10,
     frontCannon: { cooldown: 0.4, damage: 34, speed: 560, range: 520 },
     broadside: { cooldown: 1.1, damage: 34, speed: 480, range: 380, count: 3, spacing: 22 },
   },
@@ -87,6 +93,8 @@ export const BASE_CONFIG: GameConfig = {
     acceleration: 180,
     drag: 120,
     turnSpeed: 2.1,
+    turnAcceleration: 9,
+    grip: 12,
     impactDamage: 25,
   },
   shooter: {
@@ -96,6 +104,8 @@ export const BASE_CONFIG: GameConfig = {
     acceleration: 140,
     drag: 120,
     turnSpeed: 1.7,
+    turnAcceleration: 7,
+    grip: 10,
     attackRange: 430,
     preferredDistance: 300,
     aimTolerance: 0.2,

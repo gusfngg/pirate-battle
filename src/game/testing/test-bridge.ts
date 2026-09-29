@@ -59,8 +59,9 @@ export function installTestBridge(session: GameSession) {
       const { player } = session.state;
       player.x = player.prevX = x;
       player.y = player.prevY = y;
-      if (angle !== undefined) player.angle = player.prevAngle = angle;
+      if (angle !== undefined) player.angle = player.prevAngle = player.course = angle;
       player.speed = 0;
+      player.turnRate = 0;
     },
     setPlayerHealth(health) {
       session.state.player.health = health;
