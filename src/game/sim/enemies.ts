@@ -1,4 +1,5 @@
-import { angleBetween, angleDifference, distance, wrapAngle } from "../math";
+import { angleBetween, angleDifference, distance, wrapAngle, type Vec } from "../math";
+import { findPath, hasClearLine } from "../world/nav-grid";
 import { hitsAnyObstacle } from "../world/obstacles";
 import type { SimContext } from "./context";
 import { damageShip, destroyShip } from "./damage";
@@ -9,6 +10,8 @@ import { fireBow } from "./weapons";
 const LOOK_AHEAD = 110;
 const FAN_STEP = 0.35;
 const FAN_STEPS = 9;
+const REPATH_SECONDS = 0.5;
+const WAYPOINT_REACHED = 36;
 
 function isBlocked(context: SimContext, ship: Ship, angle: number, reach: number) {
   const x = ship.x + Math.cos(angle) * reach;
@@ -18,13 +21,13 @@ function isBlocked(context: SimContext, ship: Ship, angle: number, reach: number
   return outside || hitsAnyObstacle(context.obstacles, x, y, ship.radius * 0.8);
 }
 
-function isClear(context: SimContext, ship: Ship, angle: number) {
-  return !isBlocked(context, ship, angle, LOOK_AHEAD) && !isBlocked(context, ship, angle, LOOK_AHEAD * 0.5);
+function isClear(context: SimContext, ship: Ship, angle: number, reach: number) {
+  return !isBlocked(context, ship, angle, reach) && !isBlocked(context, ship, angle, reach * 0.5);
 }
 
-// segue o rumo; se tiver ilha na frente, abre um leque de direções e contorna sempre pelo mesmo lado
-function avoidObstacles(context: SimContext, ship: Ship, desired: number) {
-  if (isClear(context, ship, desired)) {
+// desvio local: se tiver algo na frente, abre um leque de direções e contorna sempre pelo mesmo lado
+function avoidObstacles(context: SimContext, ship: Ship, desired: number, reach: number) {
+  if (isClear(context, ship, desired, reach)) {
     ship.detour = 0;
     return desired;
   }
@@ -36,7 +39,7 @@ function avoidObstacles(context: SimContext, ship: Ship, desired: number) {
     const sides = leftTurn < rightTurn ? [-1, 1] : [1, -1];
     for (let step = 1; step <= FAN_STEPS && ship.detour === 0; step++) {
       for (const side of sides) {
-        if (isClear(context, ship, desired + side * step * FAN_STEP)) {
+        if (isClear(context, ship, desired + side * step * FAN_STEP, reach)) {
           ship.detour = side;
           break;
         }
@@ -49,13 +52,33 @@ function avoidObstacles(context: SimContext, ship: Ship, desired: number) {
   for (const side of [ship.detour, -ship.detour]) {
     for (let step = 1; step <= FAN_STEPS; step++) {
       const angle = wrapAngle(desired + side * step * FAN_STEP);
-      if (isClear(context, ship, angle)) {
+      if (isClear(context, ship, angle, reach)) {
         ship.detour = side;
         return angle;
       }
     }
   }
   return wrapAngle(ship.angle + Math.PI * 0.75);
+}
+
+// com linha livre vai direto; com ilha no meio segue a rota do a*, recalculada porque o alvo se mexe
+function navigateTowards(context: SimContext, ship: Ship, target: Vec, dt: number) {
+  const grid = context.navGrid;
+  if (hasClearLine(grid, ship, target)) {
+    ship.route = [];
+    return avoidObstacles(context, ship, angleBetween(ship, target), LOOK_AHEAD);
+  }
+
+  ship.routeTimer -= dt;
+  if (ship.routeTimer <= 0 || ship.route.length === 0) {
+    ship.route = findPath(grid, ship, target) ?? [];
+    ship.routeTimer = REPATH_SECONDS;
+  }
+  while (ship.route.length > 1 && distance(ship, ship.route[0]!) < WAYPOINT_REACHED) ship.route.shift();
+
+  // a rota já passa longe das ilhas, o leque só entra se algo aparecer bem perto da proa
+  const waypoint = ship.route[0] ?? target;
+  return avoidObstacles(context, ship, angleBetween(ship, waypoint), LOOK_AHEAD * 0.45);
 }
 
 function helmTowards(ship: Ship, heading: number) {
@@ -66,7 +89,7 @@ function helmTowards(ship: Ship, heading: number) {
 function updateChaser(context: SimContext, chaser: Ship, dt: number) {
   const { player } = context.state;
   const hull = hullFor("chaser", context.config);
-  const heading = avoidObstacles(context, chaser, angleBetween(chaser, player));
+  const heading = navigateTowards(context, chaser, player, dt);
   const turn = helmTowards(chaser, heading);
   const throttle = Math.abs(angleDifference(chaser.angle, heading)) > 1.3 ? 0.45 : 1;
 
@@ -91,7 +114,7 @@ function updateShooter(context: SimContext, shooter: Ship, dt: number) {
   const aim = angleBetween(shooter, { x: aimX, y: aimY });
 
   const closingIn = range > config.preferredDistance;
-  const heading = closingIn ? avoidObstacles(context, shooter, angleBetween(shooter, player)) : aim;
+  const heading = closingIn ? navigateTowards(context, shooter, player, dt) : aim;
   const throttle = closingIn ? 1 : 0.15;
 
   coolDown(shooter, dt);

@@ -81,10 +81,12 @@ test.describe("pause", () => {
     expect(still.remaining).toBe(paused.remaining);
     expect(still.elapsed).toBe(paused.elapsed);
 
+    // depois de retomar o tempo volta a andar, mas nunca mais rápido que o relógio de verdade
+    const resumedAt = Date.now();
     await page.getByRole("button", { name: "Resume" }).click();
-    await page.waitForTimeout(1200);
+    await page.waitForFunction((start) => window.__pirate!.getState().elapsed > start + 0.5, paused.elapsed, { timeout: 10_000 });
     const running = await readState(page);
-    expect(running.elapsed).toBeGreaterThan(paused.elapsed + 0.8);
-    expect(running.elapsed).toBeLessThan(paused.elapsed + 2);
+    const realSeconds = (Date.now() - resumedAt) / 1000;
+    expect(running.elapsed - paused.elapsed).toBeLessThanOrEqual(realSeconds + 0.1);
   });
 });

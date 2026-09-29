@@ -1,6 +1,7 @@
 import type { GameConfig } from "../config";
 import { createRandom } from "../random";
 import type { ArenaLayout } from "../world/layout";
+import { buildNavGrid, type NavGrid } from "../world/nav-grid";
 import { buildObstacles, type Obstacle } from "../world/obstacles";
 import type { SimContext } from "./context";
 import { updateEnemies } from "./enemies";
@@ -20,6 +21,7 @@ export interface SimulationOptions {
 export class Simulation {
   readonly config: GameConfig;
   readonly obstacles: readonly Obstacle[];
+  readonly navGrid: NavGrid;
   readonly seed: number;
   readonly state: MatchState;
 
@@ -32,6 +34,8 @@ export class Simulation {
     this.config = config;
     this.seed = seed;
     this.obstacles = buildObstacles(layout);
+    // a folga é o raio do maior inimigo, assim toda rota cabe pra qualquer casco
+    this.navGrid = buildNavGrid(this.obstacles, config.arena.width, config.arena.height, Math.max(config.chaser.radius, config.shooter.radius));
 
     const start = layout.playerStart;
     this.state = {
@@ -53,6 +57,7 @@ export class Simulation {
     this.context = {
       config,
       obstacles: this.obstacles,
+      navGrid: this.navGrid,
       random: createRandom(seed),
       state: this.state,
       emit: (event) => this.events.push(event),

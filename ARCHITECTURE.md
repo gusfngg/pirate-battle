@@ -56,9 +56,11 @@ Projectiles are points with a small radius. Each step they move, then check the 
 
 ## Enemies
 
-**Chaser.** Steers straight at the player and slows down when the turn needed is large. To get around islands it probes a point 110 units ahead (and one at half that distance) on the desired heading. If that point is blocked, it opens a fan of headings in steps of 0.35 rad. The first time it is blocked it picks the side with the smallest clear deviation, then **commits** to that side until the direct heading is clear again. Without the commitment it used to flip sides every frame behind wide islands and stall. On contact with the player it deals 25 damage and explodes.
+**Navigation.** Both enemy types share one navigation routine. When the straight line to the player is clear for their hull, they sail straight at it. When an island or rock is in the way, they follow a route from an A* search on a navigation grid (`src/game/world/nav-grid.ts`). The grid splits the arena into 32 unit cells and blocks every cell whose centre is closer to an obstacle or the arena edge than the largest enemy radius. The search uses eight neighbours but never cuts an island corner diagonally. The raw cell path is then smoothed by "pulling the string": only the points where the ship really has to turn are kept, and every leg is checked for a clear line. The player moves, so routes are recomputed every half second, which costs nothing measurable (ten enemies still run at a flat 60 FPS). A short range fan of headings stays as a safety net for anything that appears right in front of the bow. It picks a side once and commits to it, so a ship never dithers left and right.
 
-**Shooter.** Closes in with the same obstacle avoidance while it is farther than 300 units, then eases off the throttle and turns to aim. It aims slightly ahead of the player (60% of the true lead), so sailing in a straight line is not safe but dodging works. It fires its bow cannon when within 430 units and within 0.2 rad of the aim.
+**Chaser.** Heads for the player through that navigation and slows down when the turn needed is large. On contact with the player it deals 25 damage and explodes.
+
+**Shooter.** Closes in with the same navigation while it is farther than 300 units, then eases off the throttle and turns to aim. It aims slightly ahead of the player (60% of the true lead), so sailing in a straight line is not safe but dodging works. It fires its bow cannon when within 430 units and within 0.2 rad of the aim.
 
 **Spawner.** The first enemy appears 1.5 s into the match, then one per configured interval, up to 10 alive at once. Kinds come from a shuffled bag of three Chasers and two Shooters, so both kinds appear in every standard match and streaks are bounded. Spawn points are picked on a margin inside the arena edges, must be on open water with clearance from obstacles and other ships, and must be at least 520 units from the player. After 40 tries the farthest valid point wins, and if none is valid the spawn retries 0.25 s later.
 
@@ -162,7 +164,7 @@ With `?e2e=1` the session uses a manual clock and `window.__pirate` exposes `get
 ## Limitations
 
 - The simulation step is fixed at 60 Hz and rendering is not interpolated. On displays faster than 60 Hz a frame occasionally shows the same state twice, which is invisible at these speeds.
-- Enemy avoidance looks ahead a fixed distance. It handles the islands in this arena, but it is not general path finding. A maze would need a navigation grid.
+- Enemy routes are recomputed every half second rather than every step, so an enemy can take a slightly outdated line for a moment after the player turns sharply behind an island.
 - The Shooter aims with its bow only and has no broadsides.
 - The mock server lives in the same browser as the game, so "other players" are fixtures, and clearing site data also clears the mock database.
 - Audio starts after the first click or key press, as browsers require. Sound failures are silent on purpose.

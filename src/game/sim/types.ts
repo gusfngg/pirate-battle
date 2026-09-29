@@ -19,6 +19,9 @@ export interface Ship {
   cooldowns: Record<Weapon, number>;
   // lado escolhido pra contornar obstáculos: -1, 0 (rumo livre) ou 1
   detour: number;
+  // rota até o alvo quando uma ilha está no caminho, recalculada de tempos em tempos
+  route: { x: number; y: number }[];
+  routeTimer: number;
 }
 
 export interface Projectile {

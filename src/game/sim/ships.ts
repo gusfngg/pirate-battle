@@ -29,6 +29,8 @@ export function createShip(id: number, kind: ShipKind, x: number, y: number, ang
     alive: true,
     cooldowns: { front: 0, left: 0, right: 0 },
     detour: 0,
+    route: [],
+    routeTimer: 0,
   };
 }
 

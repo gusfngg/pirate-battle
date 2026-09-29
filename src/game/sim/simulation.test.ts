@@ -93,6 +93,31 @@ describe("movement", () => {
   });
 });
 
+describe("enemy navigation", () => {
+  // jogador e chaser separados por uma ilha: sem rota ele ficaria preso na praia
+  const blocked = [
+    { name: "below turtle isle", player: { x: 1000, y: 440 }, chaser: { x: 1000, y: 850 } },
+    { name: "above palm grove", player: { x: 256, y: 470 }, chaser: { x: 256, y: 30 } },
+    { name: "behind skull beach", player: { x: 540, y: 690 }, chaser: { x: 60, y: 690 } },
+    { name: "across the north sandbank", player: { x: 1300, y: 150 }, chaser: { x: 1300 + 300, y: 150 } },
+  ];
+
+  for (const scene of blocked) {
+    it(`a chaser reaches the player from ${scene.name}`, () => {
+      const match = createMatch();
+      Object.assign(match.state.player, scene.player);
+      match.spawnEnemyAt("chaser", Math.min(scene.chaser.x, 1570), scene.chaser.y, 0);
+      // parado no lugar, só o chaser se mexe; 1.4s por vez pra não deixar o spawner entrar em cena
+      let hit = false;
+      for (let chunk = 0; chunk < 6 && !hit; chunk++) {
+        match.state.spawnTimer = 99;
+        hit = run(match, 1.4).some((event) => event.type === "hit" && event.side === "player");
+      }
+      expect(hit).toBe(true);
+    });
+  }
+});
+
 describe("match end", () => {
   it("ends by time and freezes every system", () => {
     const match = createMatch({ sessionSeconds: 60, spawnSeconds: 3 });

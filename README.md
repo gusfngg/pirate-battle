@@ -108,7 +108,7 @@ Open **Network lab** (bottom left corner of every menu screen) to switch the moc
 
 ## Tests
 
-**Unit tests** (`npm run test:unit`, Vitest) run the simulation without a browser. Because the rules have no PixiJS or React dependency, a test can build a match, push inputs through `step()` and assert on the state: a broadside scores exactly one point, a ball damages once, a Chaser ramming you scores nothing, the end freezes every system, spawns respect the interval and the minimum distance, and the same seed replays the same match. Colliders, the fixed step loop, option validation and the ranking order have their own suites.
+**Unit tests** (`npm run test:unit`, Vitest) run the simulation without a browser. Because the rules have no PixiJS or React dependency, a test can build a match, push inputs through `step()` and assert on the state: a broadside scores exactly one point, a ball damages once, a Chaser ramming you scores nothing, the end freezes every system, spawns respect the interval and the minimum distance, and the same seed replays the same match. Colliders, the navigation grid (routes around islands, 120 random routes checked for clear legs), the fixed step loop, the HUD rounding, option validation and the ranking order have their own suites. Four scenes put a Chaser behind an island and check that it still reaches the player.
 
 **End to end tests** (`npm run test:e2e`, Playwright) cover the brief item by item.
 
