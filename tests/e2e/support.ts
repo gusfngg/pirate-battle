@@ -58,8 +58,9 @@ export async function openApp(page: Page, options: OpenOptions = {}) {
 
 export async function startMatch(page: Page) {
   await page.getByRole("button", { name: "Play", exact: true }).click();
-  await expect(page.getByTestId("play-screen")).toBeVisible();
-  await page.waitForFunction(() => window.__pirate !== undefined && document.querySelector("canvas") !== null);
+  // o chunk do pixi só baixa no primeiro play, com muitos workers em paralelo isso pode levar alguns segundos
+  await expect(page.getByTestId("play-screen")).toBeVisible({ timeout: 30_000 });
+  await page.waitForFunction(() => window.__pirate !== undefined && document.querySelector("canvas") !== null, undefined, { timeout: 30_000 });
 }
 
 export type GameState = Awaited<ReturnType<typeof readState>>;
