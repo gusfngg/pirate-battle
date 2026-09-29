@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { lazy, Suspense, useEffect, useRef } from "react";
 import { useMatchSync } from "@/api/queries";
 import { NetworkLab } from "@/mocks/NetworkLab";
@@ -6,6 +7,7 @@ import { LogbookScreen } from "@/screens/LogbookScreen";
 import { MenuScreen } from "@/screens/MenuScreen";
 import { OptionsScreen } from "@/screens/OptionsScreen";
 import { ResultScreen } from "@/screens/ResultScreen";
+import { E2E } from "./env";
 import { useRoute, type Route } from "./router";
 
 // o pixi só é baixado quando a partida começa, os menus abrem mais leves
@@ -50,6 +52,8 @@ export function App() {
       {route === "result" && <ResultScreen />}
       {route !== "play" && <NetworkLab />}
       {route !== "play" && <SoundToggle className="sound-toggle--corner" />}
+      {/* contagem de visitas da vercel, só no deploy e nunca nos testes automatizados */}
+      {import.meta.env.PROD && !E2E && <Analytics />}
       <img className="brand" src="/game/logo_jungle_gaming.svg" alt="Jungle Gaming" />
     </>
   );
