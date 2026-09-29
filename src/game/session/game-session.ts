@@ -1,4 +1,3 @@
-import { Application } from "pixi.js";
 import { createStore, type Store } from "@/lib/store";
 import type { GameAssets } from "../assets/game-assets";
 import { sounds } from "../audio/sound-board";
@@ -9,20 +8,12 @@ import { GameRenderer } from "../render/game-renderer";
 import { Simulation } from "../sim/simulation";
 import type { EndReason, EnemyKind, GameEvent } from "../sim/types";
 import { ARENA_LAYOUT } from "../world/layout";
+import { bindAutoPause } from "./auto-pause";
+import { crossedWarningSecond, readHud, type HudState, type PauseReason } from "./hud-state";
 import { FIXED_STEP, FixedStepLoop } from "./loop";
+import { PixiStage } from "./pixi-stage";
 
-export type PauseReason = "manual" | "blur" | "hidden" | "rotate";
-export type HudPhase = "countdown" | "running" | "ended";
-
-export interface HudState {
-  phase: HudPhase;
-  paused: PauseReason | null;
-  countdown: number;
-  health: number;
-  maxHealth: number;
-  score: number;
-  remainingSeconds: number;
-}
+export type { HudState, PauseReason } from "./hud-state";
 
 export interface MatchSummary {
   score: number;
@@ -44,11 +35,11 @@ export interface GameSessionOptions {
 // tempo pra ver a explosão final antes de ir pra tela de resultado
 const END_DELAY_MS = 1600;
 
-// dono do ciclo de vida: app do pixi, simulação, input e o store do hud
+// orquestra uma partida: liga a simulação ao pixi, ao input, ao som e ao hud do react
 export class GameSession {
   readonly hud: Store<HudState>;
   readonly pad = new ControlPad();
-  private app: Application | null = null;
+  private stage: PixiStage | null = null;
   private renderer: GameRenderer | null = null;
   private simulation: Simulation;
   private config: GameConfig;
@@ -57,13 +48,12 @@ export class GameSession {
   private readonly cleanups: (() => void)[] = [];
   private destroyed = false;
   private endTimer: ReturnType<typeof setTimeout> | null = null;
-  private resizeObserver: ResizeObserver | null = null;
 
   constructor(private readonly options: GameSessionOptions) {
     this.seed = options.seed;
     this.config = this.freezeConfig();
     this.simulation = this.createSimulation();
-    this.hud = createStore<HudState>(this.readHud());
+    this.hud = createStore<HudState>(readHud(this.state, null));
   }
 
   get state() {
@@ -78,37 +68,22 @@ export class GameSession {
     return this.hud.get().paused !== null;
   }
 
-  // o init do pixi é assíncrono, então o strict mode pode destruir antes de terminar
   async mount() {
-    const { host } = this.options;
-    const app = new Application();
-    await app.init({
-      width: Math.max(1, host.clientWidth),
-      height: Math.max(1, host.clientHeight),
-      background: "#1a6d96",
-      antialias: true,
-      resolution: Math.min(window.devicePixelRatio || 1, 2),
-      autoDensity: true,
-      preference: "webgl",
+    this.stage = await PixiStage.create({
+      host: this.options.host,
+      isCancelled: () => this.destroyed,
+      onFrame: (frameSeconds) => this.onFrame(frameSeconds),
+      onResize: (width, height) => {
+        this.renderer?.resize(width, height);
+        this.renderer?.render(this.state, 0);
+      },
     });
-
-    if (this.destroyed) {
-      app.destroy({ removeView: true }, { children: true });
-      return;
-    }
-
-    this.app = app;
-    app.canvas.setAttribute("aria-hidden", "true");
-    app.canvas.classList.add("game-canvas");
-    host.appendChild(app.canvas);
+    if (!this.stage) return;
 
     this.attachRenderer();
-    this.resize();
-    this.resizeObserver = new ResizeObserver(() => this.resize());
-    this.resizeObserver.observe(host);
-
-    app.ticker.add(this.onFrame);
-    this.bindInput();
+    const isLive = () => !this.isPaused && this.state.phase !== "ended";
+    this.cleanups.push(bindKeyboard({ pad: this.pad, isActive: isLive, onPause: () => this.pause("manual") }));
+    this.cleanups.push(bindAutoPause((reason) => this.pause(reason)));
     this.handleEvents(this.simulation.drainEvents());
   }
 
@@ -141,11 +116,8 @@ export class GameSession {
     this.loop.reset();
     this.renderer?.destroy();
     this.renderer = null;
-    if (this.app) {
-      this.attachRenderer();
-      this.resize();
-    }
-    this.hud.replace({ ...this.readHud(), paused: null });
+    if (this.stage) this.attachRenderer();
+    this.hud.replace(readHud(this.state, null));
     sounds.setLoopsMuted(false);
     this.handleEvents(this.simulation.drainEvents());
   }
@@ -171,18 +143,12 @@ export class GameSession {
     this.destroyed = true;
     this.clearEndTimer();
     for (const cleanup of this.cleanups.splice(0)) cleanup();
-    this.resizeObserver?.disconnect();
     this.pad.releaseAll();
     sounds.stopLoops();
-
-    if (this.app) {
-      this.app.ticker.remove(this.onFrame);
-      this.renderer?.destroy();
-      // as texturas são compartilhadas entre partidas, então ficam vivas
-      this.app.destroy({ removeView: true }, { children: true });
-    }
+    this.renderer?.destroy();
     this.renderer = null;
-    this.app = null;
+    this.stage?.destroy();
+    this.stage = null;
   }
 
   private freezeConfig() {
@@ -196,67 +162,33 @@ export class GameSession {
 
   private attachRenderer() {
     this.renderer = new GameRenderer(this.options.assets, ARENA_LAYOUT, this.seed);
-    this.app?.stage.addChild(this.renderer.stage);
+    this.stage?.show(this.renderer.stage);
+    this.stage?.resize();
   }
 
-  private resize() {
-    const { host } = this.options;
-    if (!this.app || !this.renderer) return;
-    const width = Math.max(1, host.clientWidth);
-    const height = Math.max(1, host.clientHeight);
-    this.app.renderer.resize(width, height);
-    this.renderer.resize(width, height);
-    this.renderer.render(this.state, 0);
-  }
-
-  private bindInput() {
-    const isLive = () => !this.isPaused && this.state.phase !== "ended";
-    this.cleanups.push(bindKeyboard({ pad: this.pad, isActive: isLive, onPause: () => this.pause("manual") }));
-
-    const onBlur = () => this.pause("blur");
-    const onVisibility = () => {
-      if (document.visibilityState === "hidden") this.pause("hidden");
-    };
-    window.addEventListener("blur", onBlur);
-    document.addEventListener("visibilitychange", onVisibility);
-    this.cleanups.push(() => {
-      window.removeEventListener("blur", onBlur);
-      document.removeEventListener("visibilitychange", onVisibility);
-    });
-  }
-
-  private readonly onFrame = () => {
-    if (!this.app || !this.renderer) return;
-    const frameSeconds = this.app.ticker.deltaMS / 1000;
-
+  private onFrame(frameSeconds: number) {
+    if (!this.renderer) return;
     if (this.options.manualClock || this.isPaused) {
       this.renderer.render(this.state, 0);
       return;
     }
-
-    this.loop.advance(frameSeconds, (dt) => this.step(dt));
+    this.loop.advance(frameSeconds, (dt) => this.simulation.step(dt, this.pad.snapshot()));
     this.flush();
     this.renderer.render(this.state, frameSeconds);
-  };
+  }
 
   private tick(dt: number) {
     if (this.isPaused) return;
-    this.step(dt);
+    this.simulation.step(dt, this.pad.snapshot());
     this.flush();
     this.renderer?.render(this.state, dt);
   }
 
-  private step(dt: number) {
-    this.simulation.step(dt, this.pad.snapshot());
-  }
-
   private flush() {
     this.handleEvents(this.simulation.drainEvents());
-    const before = this.hud.get().remainingSeconds;
-    this.hud.set(this.readHud());
-    const after = this.hud.get().remainingSeconds;
-    // aviso sonoro nos últimos 10 segundos, uma vez por segundo
-    if (after !== before && after <= 10 && after > 0 && this.state.phase === "running") sounds.play("time_warning");
+    const before = this.hud.get();
+    this.hud.set(readHud(this.state, before.paused));
+    if (crossedWarningSecond(before, this.hud.get())) sounds.play("time_warning");
   }
 
   private handleEvents(events: GameEvent[]) {
@@ -264,13 +196,13 @@ export class GameSession {
     this.renderer?.consume(events);
     sounds.consume(events, this.state);
 
-    const ended = events.find((event) => event.type === "matchEnded");
-    if (ended && ended.type === "matchEnded") {
+    for (const event of events) {
+      if (event.type !== "matchEnded") continue;
       this.pad.releaseAll();
       const summary: MatchSummary = {
-        score: ended.score,
-        elapsedSeconds: ended.elapsed,
-        reason: ended.reason,
+        score: event.score,
+        elapsedSeconds: event.elapsed,
+        reason: event.reason,
         config: { sessionSeconds: this.config.match.durationSeconds, spawnSeconds: this.config.match.spawnIntervalSeconds },
       };
       this.endTimer = setTimeout(() => {
@@ -283,18 +215,5 @@ export class GameSession {
   private clearEndTimer() {
     if (this.endTimer) clearTimeout(this.endTimer);
     this.endTimer = null;
-  }
-
-  private readHud(): HudState {
-    const { state } = this;
-    return {
-      phase: state.phase,
-      paused: this.hud?.get().paused ?? null,
-      countdown: Math.ceil(state.countdown),
-      health: Math.ceil(state.player.health),
-      maxHealth: state.player.maxHealth,
-      score: state.score,
-      remainingSeconds: Math.ceil(state.remaining),
-    };
   }
 }

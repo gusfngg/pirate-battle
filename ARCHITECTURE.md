@@ -11,14 +11,17 @@ Pirate Battle is split along one idea: **the simulation owns the truth, everythi
 
 ## React and PixiJS
 
-`PlayScreen` (React) loads the textures, then mounts a `GameStage` that creates a `GameSession` inside an effect and destroys it in the cleanup. The session is the only object that talks to PixiJS:
+`PlayScreen` (React) loads the textures, then mounts a `GameStage` that creates a `GameSession` inside an effect and destroys it in the cleanup. The session orchestrates a match and delegates each concern to a small piece in `src/game/session/`:
 
-- it creates the `Application` (asynchronous `init`), appends the canvas to a host `div`, and adds its ticker callback;
-- it builds a `GameRenderer` for the current match;
-- it binds keyboard, blur and visibility listeners;
-- it owns the fixed step loop and the HUD store.
+| Piece | Responsibility |
+| --- | --- |
+| `pixi-stage.ts` | Creates the PixiJS `Application` (asynchronous `init`), appends the canvas, follows the host size with a `ResizeObserver`, drives the ticker and destroys everything at the end |
+| `game-session.ts` | Wires the simulation to the stage, the renderer, input, sound and the HUD; owns pause, restart, the test clock and the end of match timer |
+| `loop.ts` | The fixed step accumulator |
+| `hud-state.ts` | Turns the match state into whole numbers for the HUD, plus the last ten seconds warning rule. Pure, so it is unit tested |
+| `auto-pause.ts` | Window blur and tab visibility listeners |
 
-**Strict Mode.** React mounts, unmounts and mounts again in development. `Application.init` is asynchronous, so the first session can be destroyed while Pixi is still starting. `mount()` checks a `destroyed` flag after the `await` and tears the fresh application down immediately if the component already left. The second mount then creates its own session, so there is never more than one canvas (a test walks between screens four times and checks exactly that).
+**Strict Mode.** React mounts, unmounts and mounts again in development. `Application.init` is asynchronous, so the first session can be destroyed while Pixi is still starting. `PixiStage.create` asks the session whether it was cancelled after the `await` and tears the fresh application down immediately if the component already left. The second mount then creates its own session, so there is never more than one canvas (a test walks between screens four times and checks exactly that).
 
 **No React render per frame.** The HUD reads a tiny external store (`src/lib/store.ts`) through `useSyncExternalStore` with selectors. The session writes to it after every simulation step, but `set` compares the patch shallowly, so React only re-renders when health, score, the whole second on the clock, the phase or the countdown number really change. Continuous state, such as positions, angles and projectiles, never leaves the simulation.
 
