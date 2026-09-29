@@ -3,8 +3,6 @@ import type { Controls } from "../sim/types";
 export type Action = Exclude<keyof Controls, "stick">;
 type Stick = NonNullable<Controls["stick"]>;
 
-export const ACTIONS: readonly Action[] = ["forward", "turnLeft", "turnRight", "fireFront", "fireLeft", "fireRight"];
-
 // teclado e toque escrevem aqui, cada fonte solta só o que ela apertou
 export class ControlPad {
   private readonly held = new Map<Action, Set<string>>();

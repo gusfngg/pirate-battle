@@ -35,10 +35,6 @@ function validate(assets: GameAssets) {
   }
 }
 
-export function getLoadedAssets() {
-  return loaded;
-}
-
 export const assetProgress = createStore({ progress: 0 });
 let pending: Promise<GameAssets> | null = null;
 

@@ -69,11 +69,3 @@ export function RoundButton({ icon, label, size = 56, className = "", style, onC
     </button>
   );
 }
-
-export function WoodPanel({ children, wide = false, labelledBy }: { children: ReactNode; wide?: boolean; labelledBy?: string }) {
-  return (
-    <section className={`wood-panel ${wide ? "wood-panel--wide" : ""}`} aria-labelledby={labelledBy}>
-      {children}
-    </section>
-  );
-}
