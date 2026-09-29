@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const PORT = 4173;
+// PLAYWRIGHT_BASE_URL=https://... roda a suíte contra um deploy em vez do build local
+const REMOTE = process.env.PLAYWRIGHT_BASE_URL;
 
 export default defineConfig({
   testDir: "tests/e2e",
@@ -16,7 +18,7 @@ export default defineConfig({
   reporter: [["list"], ["html", { open: "never", outputFolder: "reports/playwright" }]],
   snapshotPathTemplate: "tests/e2e/__screenshots__/{projectName}/{testFileName}/{arg}{ext}",
   use: {
-    baseURL: `http://localhost:${PORT}`,
+    baseURL: REMOTE ?? `http://localhost:${PORT}`,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "off",
@@ -35,10 +37,12 @@ export default defineConfig({
     },
   ],
   // roda contra o build otimizado, igual ao que vai pro deploy
-  webServer: {
-    command: `npm run build && npx vite preview --port ${PORT} --strictPort`,
-    url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
-  },
+  webServer: REMOTE
+    ? undefined
+    : {
+        command: `npm run build && npx vite preview --port ${PORT} --strictPort`,
+        url: `http://localhost:${PORT}`,
+        reuseExistingServer: !process.env.CI,
+        timeout: 180_000,
+      },
 });

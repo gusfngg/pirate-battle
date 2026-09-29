@@ -1,0 +1,218 @@
+/* painel de madeira: a moldura inteira vem do png via border-image */
+.wood-panel {
+  position: relative;
+  width: min(100%, 520px);
+  border: 56px solid transparent;
+  border-image: var(--panel) 60 fill / 56px stretch;
+  padding: 8px 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45));
+}
+
+.wood-panel--wide {
+  width: min(100%, 1040px);
+}
+
+.panel-title {
+  margin: 0;
+  font-family: var(--title-font);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+.panel-note {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.panel-error {
+  margin: 0;
+  color: var(--danger);
+  font-weight: 700;
+  max-width: 34ch;
+}
+
+.panel-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* botões com a arte do pacote: normal, hover, pressionado e desabilitado */
+.game-button {
+  --face: image-set(url("/game/ui/menu/button_primary_normal.png") 1x, url("/game/ui@2x/menu/button_primary_normal.png") 2x);
+  position: relative;
+  min-width: 240px;
+  min-height: 64px;
+  padding: 0 28px;
+  border: 18px solid transparent;
+  border-width: 18px 40px;
+  border-image: var(--face) 22 52 fill / 18px 40px stretch;
+  background: none;
+  cursor: pointer;
+  font-family: var(--body-font);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #3a2410;
+  text-shadow: 0 1px 0 rgba(255, 235, 180, 0.6);
+  transition: transform 90ms ease-out;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.game-button__label {
+  display: block;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.game-button:hover {
+  --face: image-set(url("/game/ui/menu/button_primary_hover.png") 1x, url("/game/ui@2x/menu/button_primary_hover.png") 2x);
+}
+
+.game-button:active {
+  --face: image-set(url("/game/ui/menu/button_primary_pressed.png") 1x, url("/game/ui@2x/menu/button_primary_pressed.png") 2x);
+  transform: translateY(1px) scale(0.985);
+}
+
+.game-button:disabled {
+  --face: image-set(url("/game/ui/menu/button_primary_disabled.png") 1x, url("/game/ui@2x/menu/button_primary_disabled.png") 2x);
+  cursor: not-allowed;
+  color: #5d5446;
+  text-shadow: none;
+  transform: none;
+}
+
+.game-button--secondary {
+  --face: image-set(url("/game/ui/menu/button_secondary_normal.png") 1x, url("/game/ui@2x/menu/button_secondary_normal.png") 2x);
+  color: var(--cream);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.game-button--secondary:hover,
+.game-button--secondary[aria-current="page"] {
+  --face: image-set(url("/game/ui/menu/button_primary_normal.png") 1x, url("/game/ui@2x/menu/button_primary_normal.png") 2x);
+  color: #3a2410;
+  text-shadow: 0 1px 0 rgba(255, 235, 180, 0.6);
+}
+
+.game-button--secondary:active {
+  --face: image-set(url("/game/ui/menu/button_secondary_pressed.png") 1x, url("/game/ui@2x/menu/button_secondary_pressed.png") 2x);
+}
+
+.game-button--small {
+  min-width: 190px;
+  min-height: 52px;
+  border-width: 14px 32px;
+  border-image-width: 14px 32px;
+  font-size: 17px;
+}
+
+.round-button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: url("/game/ui/controls/button_round_normal.png") center / contain no-repeat;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.round-button:hover {
+  background-image: url("/game/ui/controls/button_round_hover.png");
+}
+
+.round-button:active,
+.round-button[data-pressed] {
+  background-image: url("/game/ui/controls/button_round_pressed.png");
+}
+
+.round-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.round-button img {
+  width: 52%;
+  height: 52%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* carregamento */
+.loading-panel {
+  min-height: 300px;
+  justify-content: center;
+}
+
+.progress {
+  width: min(320px, 70vw);
+  height: 18px;
+  border-radius: 9px;
+  background: var(--navy-deep);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  background: linear-gradient(#ffe08a, #e79b2d);
+  transition: width 120ms linear;
+}
+
+/* diálogo nativo sem a caixa padrão do navegador */
+.game-dialog {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 16px);
+  overflow: visible;
+}
+
+.game-dialog::backdrop {
+  background: rgba(8, 16, 28, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.wood-panel--dialog {
+  width: min(460px, calc(100vw - 32px));
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
+}
+
+.panel-actions--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.text-input {
+  width: min(260px, 70vw);
+  padding: 6px 10px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: var(--navy-deep);
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.text-input[aria-invalid="true"] {
+  border-color: var(--danger);
+}

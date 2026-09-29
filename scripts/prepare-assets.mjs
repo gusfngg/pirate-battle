@@ -98,6 +98,7 @@ cpSync(join(source, "png", "retina", "ui"), join(target, "ui@2x"), { recursive: 
 cpSync(join(source, "png", "default", "ships"), join(target, "ships"), { recursive: true });
 cpSync(join(source, "sounds"), join(target, "sounds"), { recursive: true });
 cpSync(join(source, "logo_jungle_gaming.svg"), join(target, "logo_jungle_gaming.svg"));
-cpSync(join(source, "ui_scene_background.png"), join(target, "menu_background.png"));
+// fundo do menu otimizado uma vez (jpeg 78%), ele aparece desfocado então não perde nada
+cpSync(join(source, "optimized", "menu_background.jpg"), join(target, "menu_background.jpg"));
 
 console.log(`assets ready: ${shipFrames} ship frames, 96 tiles, ui atlas, sounds`);

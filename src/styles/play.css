@@ -1,0 +1,253 @@
+/* partida */
+.play-screen {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #1a6d96;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.play-screen__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.game-canvas {
+  display: block;
+  touch-action: none;
+}
+
+.play-screen__failure {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 16px;
+  text-align: center;
+  background: rgba(10, 20, 32, 0.8);
+  font-weight: 800;
+}
+
+.hud {
+  position: absolute;
+  top: max(10px, env(safe-area-inset-top));
+  left: max(10px, env(safe-area-inset-left));
+  right: calc(max(10px, env(safe-area-inset-right)) + 64px);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.hud__health {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hud__heart {
+  width: 40px;
+}
+
+.health-bar {
+  position: relative;
+  width: clamp(170px, 22vw, 256px);
+}
+
+.health-bar img {
+  width: 100%;
+  height: auto;
+}
+
+.health-bar__fill {
+  position: absolute;
+  inset: 0;
+  transition: clip-path 180ms ease-out;
+}
+
+.health-bar__text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: clamp(13px, 1.4vw, 17px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.hud__counters {
+  display: flex;
+  gap: 8px;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: clamp(112px, 12vw, 160px);
+  aspect-ratio: 160 / 56;
+  background: url("/game/ui/hud/counter_panel.png") center / 100% 100% no-repeat;
+  font-weight: 800;
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-variant-numeric: tabular-nums;
+}
+
+.counter img {
+  width: clamp(20px, 2vw, 28px);
+}
+
+.counter--warning span {
+  color: #ffb199;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.hud__pause {
+  position: absolute;
+  top: max(8px, env(safe-area-inset-top));
+  right: max(10px, env(safe-area-inset-right));
+}
+
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--title-font);
+  font-size: min(28vh, 200px);
+  color: var(--gold);
+  text-shadow: 0 8px 0 rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  animation: count 1s ease-out forwards;
+}
+
+@keyframes count {
+  from {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.controls-legend {
+  position: absolute;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(12, 22, 36, 0.6);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.touch-controls {
+  display: none;
+}
+
+.touch-button {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: url("/game/ui/controls/button_round_normal.png") center / contain no-repeat;
+  display: grid;
+  place-items: center;
+  touch-action: none;
+  opacity: 0.92;
+}
+
+.touch-button[data-pressed] {
+  background-image: url("/game/ui/controls/button_round_pressed.png");
+  transform: scale(0.94);
+}
+
+.touch-button img {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+@media (pointer: coarse) {
+  .controls-legend {
+    display: none;
+  }
+
+  .touch-controls {
+    display: block;
+  }
+
+  .touch-controls__cluster {
+    position: absolute;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    display: grid;
+    grid-template-columns: repeat(3, 64px);
+    grid-template-rows: 52px 52px;
+    gap: 0 6px;
+  }
+
+  .touch-controls__cluster--helm {
+    left: max(14px, env(safe-area-inset-left));
+  }
+
+  .touch-controls__cluster--guns {
+    right: max(14px, env(safe-area-inset-right));
+  }
+
+  /* botão do meio fica mais alto, como no layout de referência */
+  .touch-button:nth-child(1),
+  .touch-button:nth-child(3) {
+    grid-row: 2;
+  }
+
+  .touch-button:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+.rotate-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: rgba(10, 20, 32, 0.92);
+  text-align: center;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.rotate-overlay img {
+  width: 60px;
+  animation: tilt 2s ease-in-out infinite;
+}
+
+@keyframes tilt {
+  50% {
+    transform: rotate(90deg);
+  }
+}

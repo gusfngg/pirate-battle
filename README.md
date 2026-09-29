@@ -4,7 +4,8 @@ A top down naval shooter for the browser. You command a red crossed ship among i
 
 Built with **React 19**, **TypeScript** (strict), **PixiJS 8**, **TanStack Query 5**, **Axios**, **MSW 2** and **Playwright**.
 
-- Live build: _add the Vercel URL here after deploy_
+- Live build: https://pirate-battle-phi.vercel.app
+- Repository: https://github.com/gusfngg/pirate-battle
 - How it is put together: [ARCHITECTURE.md](ARCHITECTURE.md)
 - Measured performance: [PERFORMANCE.md](PERFORMANCE.md)
 - Original brief: [CHALLENGE.md](CHALLENGE.md)
@@ -145,13 +146,15 @@ src/
   play/       the match screen, HUD and touch controls
   screens/    menu, options, result and captain's log
   ui/         buttons, panels and dialog
+  styles/     plain CSS split by concern: tokens, base, layout, components,
+              screens, network lab, play, and responsive overrides last
 tests/e2e/    Playwright suite and visual baselines
 tests/perf/   profiling run
 ```
 
 ## Credits and licenses
 
-- Game art, UI atlases, reference screenshots and sounds in `assets/` were provided with the challenge by Jungle Gaming. The ship and tile sheets follow the layout of Kenney's Pirate Pack, released under CC0 1.0.
+- Game art, UI atlases, reference screenshots and sounds in `assets/` were provided with the challenge by Jungle Gaming. `assets/optimized/menu_background.jpg` is a compressed copy of `ui_scene_background.png` (126 KB instead of 507 KB), used as the blurred menu backdrop. The ship and tile sheets follow the layout of Kenney's Pirate Pack, released under CC0 1.0.
 - [Lilita One](https://fonts.google.com/specimen/Lilita+One) and [Nunito](https://fonts.google.com/specimen/Nunito), SIL Open Font License 1.1, bundled through Fontsource.
 - PixiJS, React, TanStack Query, Axios and MSW are MIT licensed.
 - The code in this repository was written for the challenge.

@@ -1,0 +1,380 @@
+/* menu principal */
+.menu-panel {
+  width: min(100%, 560px);
+}
+
+.menu-title {
+  margin: 0;
+}
+
+.menu-title img {
+  width: min(360px, 70vw);
+  height: auto;
+}
+
+.tagline {
+  margin: -6px 0 0;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: var(--cream);
+}
+
+.menu-actions,
+.menu-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.menu-actions {
+  flex-direction: column;
+}
+
+.controls-help {
+  width: 100%;
+  max-width: 380px;
+  text-align: left;
+  background: var(--row);
+  border-radius: 12px;
+  padding: 8px 14px;
+}
+
+.controls-help summary {
+  cursor: pointer;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  color: var(--gold);
+}
+
+.controls-help dl {
+  margin: 10px 0 6px;
+  display: grid;
+  gap: 6px;
+}
+
+.controls-help__row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+}
+
+.controls-help dd {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.controls-help p {
+  margin: 8px 0 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* opções */
+.options-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.option-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.option-field label {
+  font-weight: 800;
+  color: var(--cream);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stepper__value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.stepper input {
+  width: 3.4em;
+  padding: 4px 6px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: var(--navy-deep);
+  text-align: center;
+  font-weight: 800;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.stepper input::-webkit-outer-spin-button,
+.stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.stepper input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.option-hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.option-error {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--danger);
+}
+
+.option-notice {
+  min-height: 1.4em;
+  margin: 0;
+  font-weight: 700;
+  color: var(--success);
+}
+
+/* resultado */
+.result-score {
+  margin: 0;
+  font-family: var(--title-font);
+  font-size: 96px;
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: 0 5px 0 rgba(0, 0, 0, 0.35);
+}
+
+.result-meta {
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.result-config {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* diário do capitão: ranking e histórico */
+.logbook {
+  gap: 10px;
+}
+
+.logbook__tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.logbook__panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-height: 330px;
+}
+
+.logbook__subtitle {
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 14px;
+}
+
+.logbook__sync {
+  color: var(--gold);
+}
+
+.logbook__warning,
+.logbook__pending {
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(120, 60, 30, 0.45);
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.logbook__pending {
+  background: rgba(146, 120, 62, 0.35);
+  color: var(--gold);
+}
+
+.logbook__state {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-weight: 700;
+  max-width: 44ch;
+}
+
+.logbook__state[role="alert"] p {
+  margin: 0;
+  color: var(--danger);
+}
+
+.logbook__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  text-align: left;
+  transition: opacity 150ms;
+}
+
+.logbook__table.is-stale {
+  opacity: 0.55;
+}
+
+.logbook__table th {
+  padding: 0 14px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.logbook__table td {
+  padding: 10px 14px;
+  background: var(--row);
+  font-weight: 800;
+}
+
+.logbook__table td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.logbook__table td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.logbook__table tr.is-mine td {
+  background: var(--row-highlight);
+}
+
+.cell-rank,
+.cell-points {
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.cell-captain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cell-star {
+  width: 22px;
+}
+
+.cell-date {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.cell-date strong {
+  color: var(--cream);
+}
+
+.cell-result {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.cell-result small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: none;
+}
+
+.cell-result--time {
+  color: var(--success);
+}
+
+.cell-result--destroyed {
+  color: var(--danger);
+}
+
+.you-badge {
+  padding: 1px 6px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cream);
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* situação do registro na tela de resultado */
+.registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 36ch;
+}
+
+.registration p {
+  margin: 0;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.registration--registered p {
+  color: var(--success);
+}
+
+.registration--failed p {
+  color: var(--danger);
+}
+
+.registration--pending p,
+.registration--unknown p {
+  color: var(--muted);
+}

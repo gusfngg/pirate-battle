@@ -1,0 +1,54 @@
+/* painel de cenários de rede */
+.network-lab-toggle {
+  position: fixed;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(12, 22, 36, 0.75);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.network-lab-toggle strong {
+  color: var(--gold);
+}
+
+.network-lab {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 4px;
+  max-height: min(52dvh, 420px);
+  overflow-y: auto;
+  text-align: left;
+}
+
+.network-lab legend {
+  margin-bottom: 6px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.network-lab__option {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.network-lab__option:has(input:checked) {
+  background: var(--row-highlight);
+}
+
+.network-lab__option span {
+  display: grid;
+}
+
+.network-lab__option small {
+  color: var(--muted);
+}

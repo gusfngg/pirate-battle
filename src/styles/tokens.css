@@ -1,0 +1,16 @@
+:root {
+  --navy: #1c2b3f;
+  --navy-deep: #111c2b;
+  --row: rgba(12, 22, 36, 0.72);
+  --row-highlight: rgba(146, 120, 62, 0.55);
+  --cream: #fbeccb;
+  --gold: #ffcf66;
+  --muted: #c9d3e0;
+  --danger: #ffb4a6;
+  --success: #b9f0a8;
+  --focus: #7fe3ff;
+  --title-font: "Lilita One", "Trebuchet MS", sans-serif;
+  --body-font: "Nunito", "Segoe UI", sans-serif;
+  --panel: image-set(url("/game/ui/menu/panel_menu.png") 1x, url("/game/ui@2x/menu/panel_menu.png") 2x);
+  color-scheme: dark;
+}

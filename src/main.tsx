@@ -2,7 +2,7 @@ import "@fontsource/lilita-one/400.css";
 import "@fontsource/nunito/400.css";
 import "@fontsource/nunito/700.css";
 import "@fontsource/nunito/800.css";
-import "./styles/global.css";
+import "./styles/index.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
