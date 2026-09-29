@@ -43,7 +43,7 @@ Pirate Battle is split along one idea: **the simulation owns the truth, everythi
 
 ## Movement and collisions
 
-Ships have a heading (where the bow points), a course (where the hull actually travels), a scalar speed, a turn rate and a radius. Throttle accelerates towards the maximum speed, releasing it applies drag. The rudder has inertia: the turn rate climbs towards its maximum at `turnAcceleration` and eases back to zero after the key is released, so turns start and end in smooth arcs instead of snapping. Turning keeps 55% of the rudder even when standing still, so a ship can always point away from trouble. The course follows the heading with a lag set by `grip`, which gives the hull a small, readable drift in turns (about 15 degrees for the player at full speed and full rudder) and lines up again on a straight. All of it is per hull in the config, so handling is tuned without touching the systems.
+Ships have a heading (where the bow points), a course (where the hull actually travels), a scalar speed, a turn rate and a radius. Throttle accelerates towards the maximum speed, releasing it applies drag. The rudder has inertia: the turn rate climbs towards its maximum at `turnAcceleration` and eases back to zero after the key is released, so turns start and end in smooth arcs instead of snapping. Turning keeps 55% of the rudder even when standing still, so a ship can always point away from trouble. The course follows the heading with a lag set by `grip`, which gives the hull a small, readable drift in turns (about 14 degrees for the player at full speed and full rudder) and lines up again on a straight. All of it is per hull in the config, so handling is tuned without touching the systems.
 
 The world has two obstacle shapes, both built from the layout JSON in `src/game/world/`:
 
@@ -154,7 +154,8 @@ With `?e2e=1` the session uses a manual clock and `window.__pirate` exposes `get
 
 | Value | Number | Why |
 | --- | --- | --- |
-| Rudder and grip | player 10 rad/s² and 10, Chaser 9 and 12, Shooter 7 and 10 | The rudder reaches full turn in about a quarter of a second, responsive but no longer binary. Chasers grip harder so their rams stay honest, the heavy Shooter swings slowest |
+| Player handling | 3.3 rad/s turn, rudder 20 rad/s², grip 13, acceleration 300, drag 200 | Tuned after playtesting: the player's ship answers `A`/`D` almost at once (full rudder in about 0.15 s) and stops quickly, while keeping a small drift so turns still read as a boat |
+| Enemy handling | Chaser 2.1 rad/s, rudder 9, grip 12. Shooter 1.7 rad/s, rudder 7, grip 10 | Clearly heavier than the player, so outmanoeuvring them is a skill. Chasers grip harder so their rams stay honest |
 | Player health | 100 | Four Chaser rams or ten Shooter hits. A careless run lasts about 20 s, a careful one survives the whole clock |
 | Bow cannon | 34 damage, 0.4 s cooldown, 520 range | Precise and fast. Two shots sink a Chaser, three sink a Shooter |
 | Broadside | 3 x 34 damage, 1.1 s cooldown, 380 range | One full broadside sinks anything, but it asks you to turn side on, which is risky against Chasers |
