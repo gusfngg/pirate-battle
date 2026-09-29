@@ -112,7 +112,7 @@ Open **Network lab** (bottom left corner of every menu screen) to switch the moc
 
 **End to end tests** (`npm run test:e2e`, Playwright) cover the brief item by item.
 
-`npm run test:e2e` builds the production bundle, serves it and runs 56 scenarios on desktop Chromium (1280 x 720) and on a Pixel 7 in landscape. Combat tests press the real game keys (or dispatch real pointer events on the touch buttons) and advance the simulation through a manual clock exposed by the test bridge, so the rules, collisions and rendering run exactly as in the game while the timing stays reproducible. Every test starts from a fresh browser context, and any unexpected console error fails the test.
+`npm run test:e2e` builds the production bundle, serves it and runs 63 scenarios on desktop Chromium (1280 x 720) and on a Pixel 7 in landscape. Combat tests press the real game keys (or dispatch real pointer events on the touch buttons) and advance the simulation through a manual clock exposed by the test bridge, so the rules, collisions and rendering run exactly as in the game while the timing stays reproducible. Every test starts from a fresh browser context, and any unexpected console error fails the test.
 
 | Brief item | Spec |
 | --- | --- |
@@ -129,6 +129,7 @@ Open **Network lab** (bottom left corner of every menu screen) to switch the moc
 | 11. Registration, both tabs updated, pending record after refresh | `registration.spec.ts` |
 | 12. Retry after timeout without duplicates, late answers | `resilience.spec.ts` |
 | Visual regression of menu, arena and result | `visual.spec.ts` |
+| Accessibility: automated WCAG 2.1 A/AA audit (axe) of every screen and dialog | `accessibility.spec.ts` |
 
 The HTML report lands in `reports/playwright/` and traces of failing tests in `test-results/`. Visual baselines are versioned in `tests/e2e/__screenshots__/`.
 

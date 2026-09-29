@@ -88,6 +88,12 @@ Keyboard and touch both write into a `ControlPad`, which tracks for every action
 
 Pause can be triggered by the pause button, `Esc`/`P`, the window losing focus, the tab being hidden, or a phone being turned upright. While paused the ticker keeps drawing the frozen scene, but no step runs: the match clock, cooldowns, spawn timer and projectiles all stand still. Resuming always needs an explicit action in the pause dialog (a native `<dialog>`, which traps focus, closes on `Esc` and restores focus afterwards).
 
+## Accessibility
+
+Menus are real buttons, links and form fields in document order, so the whole game outside a match works with the keyboard alone, with a visible focus ring everywhere. Changing screens moves focus to the new screen's first action or heading. Dialogs are native `<dialog>` elements, which trap focus and restore it when they close. Option fields have labels, hints linked through `aria-describedby`, `aria-invalid` and error messages announced with `role="alert"`. The captain's log uses real tabs and tables with column headers. During a match a visually hidden panel exposes status, score, time and health as text, and a polite live region announces phase changes and low health, never every frame. Touch buttons carry labels, and `prefers-reduced-motion` turns animations off.
+
+Panels and buttons are drawn with `border-image` from the asset pack. Contrast checkers cannot see those images, so every panel and button also declares the colour measured at the centre of its art as a background underneath. The visuals do not change, but automated audits and high contrast tools now measure against the real background. `accessibility.spec.ts` runs an axe WCAG 2.1 A/AA audit on every screen and dialog, desktop and mobile, and fails on any violation.
+
 ## Local persistence
 
 | Key | Content |

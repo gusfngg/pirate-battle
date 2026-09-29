@@ -4,6 +4,7 @@
   width: min(100%, 520px);
   border: 56px solid transparent;
   border-image: var(--panel) 60 fill / 56px stretch;
+  background: var(--panel-face) padding-box;
   padding: 8px 4px;
   text-align: center;
   display: flex;
@@ -59,7 +60,8 @@
   border: 18px solid transparent;
   border-width: 18px 40px;
   border-image: var(--face) 22 52 fill / 18px 40px stretch;
-  background: none;
+  --fill: var(--gold-face);
+  background: var(--fill) padding-box;
   cursor: pointer;
   font-family: var(--body-font);
   font-weight: 800;
@@ -81,15 +83,18 @@
 
 .game-button:hover {
   --face: image-set(url("/game/ui/menu/button_primary_hover.png") 1x, url("/game/ui@2x/menu/button_primary_hover.png") 2x);
+  --fill: var(--gold-hover);
 }
 
 .game-button:active {
   --face: image-set(url("/game/ui/menu/button_primary_pressed.png") 1x, url("/game/ui@2x/menu/button_primary_pressed.png") 2x);
+  --fill: var(--gold-pressed);
   transform: translateY(1px) scale(0.985);
 }
 
 .game-button:disabled {
   --face: image-set(url("/game/ui/menu/button_primary_disabled.png") 1x, url("/game/ui@2x/menu/button_primary_disabled.png") 2x);
+  --fill: var(--disabled-face);
   cursor: not-allowed;
   color: #5d5446;
   text-shadow: none;
@@ -98,6 +103,7 @@
 
 .game-button--secondary {
   --face: image-set(url("/game/ui/menu/button_secondary_normal.png") 1x, url("/game/ui@2x/menu/button_secondary_normal.png") 2x);
+  --fill: var(--navy-face);
   color: var(--cream);
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
 }
@@ -105,12 +111,14 @@
 .game-button--secondary:hover,
 .game-button--secondary[aria-current="page"] {
   --face: image-set(url("/game/ui/menu/button_primary_normal.png") 1x, url("/game/ui@2x/menu/button_primary_normal.png") 2x);
+  --fill: var(--gold-face);
   color: #3a2410;
   text-shadow: 0 1px 0 rgba(255, 235, 180, 0.6);
 }
 
 .game-button--secondary:active {
   --face: image-set(url("/game/ui/menu/button_secondary_pressed.png") 1x, url("/game/ui@2x/menu/button_secondary_pressed.png") 2x);
+  --fill: var(--navy-pressed);
 }
 
 .game-button--small {

@@ -11,6 +11,14 @@
   --focus: #7fe3ff;
   --title-font: "Lilita One", "Trebuchet MS", sans-serif;
   --body-font: "Nunito", "Segoe UI", sans-serif;
+  /* cores medidas no centro de cada arte: ficam por baixo da imagem, assim leitores de contraste enxergam o fundo real */
+  --panel-face: #263647;
+  --gold-face: #eca638;
+  --gold-hover: #fbd88c;
+  --gold-pressed: #be7a26;
+  --navy-face: #2b3c4b;
+  --navy-pressed: #25313d;
+  --disabled-face: #97816d;
   --panel: image-set(url("/game/ui/menu/panel_menu.png") 1x, url("/game/ui@2x/menu/panel_menu.png") 2x);
   color-scheme: dark;
 }
