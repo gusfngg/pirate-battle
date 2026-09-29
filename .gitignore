@@ -32,3 +32,6 @@ playwright/.cache/
 
 # Local screenshot helper
 *.tmp.mjs
+
+# Personal session diary (kept local)
+docs/diario.md
