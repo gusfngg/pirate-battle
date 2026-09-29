@@ -69,6 +69,7 @@ export class Simulation {
   }
 
   step(dt: number, controls: Controls) {
+    this.rememberPoses();
     if (this.state.phase === "ended") return;
     if (this.state.phase === "countdown") {
       this.tickCountdown(dt);
@@ -99,6 +100,19 @@ export class Simulation {
   // usado pela ponte de e2e pra montar cenas, passa pelas regras reais de spawn
   spawnEnemyAt(kind: EnemyKind, x: number, y: number, angle?: number) {
     return spawnEnemy(this.context, kind, x, y, angle);
+  }
+
+  // guarda a pose antes de mover; parado (contagem, fim) a pose anterior fica igual à atual
+  private rememberPoses() {
+    for (const ship of [this.state.player, ...this.state.enemies]) {
+      ship.prevX = ship.x;
+      ship.prevY = ship.y;
+      ship.prevAngle = ship.angle;
+    }
+    for (const projectile of this.state.projectiles) {
+      projectile.prevX = projectile.x;
+      projectile.prevY = projectile.y;
+    }
   }
 
   private tickCountdown(dt: number) {

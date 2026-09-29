@@ -20,7 +20,7 @@ export class ProjectileLayer {
     return this.active.size;
   }
 
-  sync(projectiles: readonly Projectile[]) {
+  sync(projectiles: readonly Projectile[], alpha: number) {
     this.seen.clear();
     this.trails.clear();
 
@@ -32,12 +32,14 @@ export class ProjectileLayer {
         sprite.visible = true;
         this.active.set(projectile.id, sprite);
       }
-      sprite.position.set(projectile.x, projectile.y);
+      const x = projectile.prevX + (projectile.x - projectile.prevX) * alpha;
+      const y = projectile.prevY + (projectile.y - projectile.prevY) * alpha;
+      sprite.position.set(x, y);
       sprite.tint = projectile.side === "player" ? 0xffffff : 0xffc9b8;
 
       this.trails
-        .moveTo(projectile.x, projectile.y)
-        .lineTo(projectile.x - projectile.vx * TRAIL_LENGTH, projectile.y - projectile.vy * TRAIL_LENGTH);
+        .moveTo(x, y)
+        .lineTo(x - projectile.vx * TRAIL_LENGTH, y - projectile.vy * TRAIL_LENGTH);
     }
     if (projectiles.length > 0) this.trails.stroke({ width: 3, color: 0xffffff, alpha: 0.45, cap: "round" });
 

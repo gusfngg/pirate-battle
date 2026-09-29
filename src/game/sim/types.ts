@@ -11,6 +11,10 @@ export interface Ship {
   x: number;
   y: number;
   angle: number;
+  // pose no passo anterior, o render interpola entre ela e a atual
+  prevX: number;
+  prevY: number;
+  prevAngle: number;
   speed: number;
   health: number;
   maxHealth: number;
@@ -30,6 +34,8 @@ export interface Projectile {
   ownerId: number;
   x: number;
   y: number;
+  prevX: number;
+  prevY: number;
   vx: number;
   vy: number;
   damage: number;

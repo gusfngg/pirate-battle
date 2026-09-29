@@ -97,9 +97,10 @@ export class GameRenderer {
     }
   }
 
-  render(state: MatchState, dt: number) {
-    this.syncShips(state, dt);
-    this.projectiles.sync(state.projectiles);
+  // alpha = quanto do próximo passo da simulação já passou (1 desenha o estado mais recente)
+  render(state: MatchState, dt: number, alpha = 1) {
+    this.syncShips(state, dt, alpha);
+    this.projectiles.sync(state.projectiles, alpha);
     this.effects.update(dt);
     this.arena.update(dt);
     this.updateWakes(state, dt);
@@ -112,7 +113,7 @@ export class GameRenderer {
     return { ships: this.ships.size, projectiles: this.projectiles.count, effects: this.effects.count, foam: this.foam.length };
   }
 
-  private syncShips(state: MatchState, dt: number) {
+  private syncShips(state: MatchState, dt: number, alpha: number) {
     const present = new Set<number>();
     const all: Ship[] = [state.player, ...state.enemies];
 
@@ -125,7 +126,7 @@ export class GameRenderer {
         this.hulls.addChild(view.hull);
         this.bars.addChild(view.bar);
       }
-      view.sync(dt);
+      view.sync(dt, alpha);
     }
 
     for (const [id, view] of this.ships) {

@@ -174,7 +174,7 @@ export class GameSession {
     }
     this.loop.advance(frameSeconds, (dt) => this.simulation.step(dt, this.pad.snapshot()));
     this.flush();
-    this.renderer.render(this.state, frameSeconds);
+    this.renderer.render(this.state, frameSeconds, this.loop.alpha);
   }
 
   private tick(dt: number) {

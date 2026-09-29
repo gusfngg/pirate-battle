@@ -57,9 +57,9 @@ export function installTestBridge(session: GameSession) {
     spawnEnemy: (kind, x, y, angle) => session.spawnEnemyForTest(kind, x, y, angle),
     teleportPlayer(x, y, angle) {
       const { player } = session.state;
-      player.x = x;
-      player.y = y;
-      if (angle !== undefined) player.angle = angle;
+      player.x = player.prevX = x;
+      player.y = player.prevY = y;
+      if (angle !== undefined) player.angle = player.prevAngle = angle;
       player.speed = 0;
     },
     setPlayerHealth(health) {

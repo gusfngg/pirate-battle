@@ -17,6 +17,11 @@ export class FixedStepLoop {
     return steps;
   }
 
+  // fração do próximo passo que já passou, usada pra interpolar o desenho entre dois passos
+  get alpha() {
+    return Math.min(1, this.accumulator / FIXED_STEP);
+  }
+
   reset() {
     this.accumulator = 0;
   }

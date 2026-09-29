@@ -20,12 +20,16 @@ function launch(context: SimContext, volley: Volley) {
   const outY = Math.sin(angle);
 
   for (const offset of volley.offsets) {
+    const x = ship.x + outX * volley.muzzle + alongX * offset;
+    const y = ship.y + outY * volley.muzzle + alongY * offset;
     context.state.projectiles.push({
       id: context.nextId(),
       side: volley.side,
       ownerId: ship.id,
-      x: ship.x + outX * volley.muzzle + alongX * offset,
-      y: ship.y + outY * volley.muzzle + alongY * offset,
+      x,
+      y,
+      prevX: x,
+      prevY: y,
       vx: outX * cannon.speed,
       vy: outY * cannon.speed,
       damage: cannon.damage,

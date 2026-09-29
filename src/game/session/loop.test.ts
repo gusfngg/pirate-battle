@@ -23,4 +23,12 @@ describe("fixed step loop", () => {
     loop.reset();
     expect(loop.advance(FIXED_STEP * 0.2, () => undefined)).toBe(0);
   });
+
+  it("reports how far into the next step the frame is, for interpolated drawing", () => {
+    const loop = new FixedStepLoop();
+    loop.advance(FIXED_STEP * 2.25, () => undefined);
+    expect(loop.alpha).toBeCloseTo(0.25);
+    loop.reset();
+    expect(loop.alpha).toBe(0);
+  });
 });

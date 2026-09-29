@@ -1,5 +1,6 @@
 import { Container, Rectangle, Sprite, Texture } from "pixi.js";
 import { frame, type GameAssets } from "../assets/game-assets";
+import { angleDifference } from "../math";
 import type { Ship, ShipKind } from "../sim/types";
 
 // cada linha do atlas é um estágio de dano: inteiro, avariado, destruído, naufrágio
@@ -66,20 +67,23 @@ export class ShipView {
     this.bar.scale.set(BAR_SCALE);
     this.bar.pivot.set(80, 20);
 
-    this.sync(0);
+    this.sync(0, 1);
   }
 
   hit() {
     this.flash = FLASH_SECONDS;
   }
 
-  sync(dt: number) {
+  sync(dt: number, alpha: number) {
     const { ship } = this;
     this.time += dt;
-    this.hull.position.set(ship.x, ship.y);
+    const x = ship.prevX + (ship.x - ship.prevX) * alpha;
+    const y = ship.prevY + (ship.y - ship.prevY) * alpha;
+    const angle = ship.prevAngle + angleDifference(ship.prevAngle, ship.angle) * alpha;
+    this.hull.position.set(x, y);
     // o sprite nasce com a proa pra baixo, o ângulo zero da simulação aponta pra direita
-    this.hull.rotation = ship.angle - Math.PI / 2;
-    this.bar.position.set(ship.x, ship.y - 54);
+    this.hull.rotation = angle - Math.PI / 2;
+    this.bar.position.set(x, y - 54);
     this.bar.visible = ship.alive;
 
     const stage = damageStage(ship.health, ship.maxHealth);
