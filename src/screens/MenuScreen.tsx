@@ -14,7 +14,7 @@ export function MenuScreen() {
     <main className="screen screen--menu">
       <section className="wood-panel menu-panel" aria-labelledby="game-title">
         <h1 id="game-title" className="menu-title">
-          <img src="/game/ui/menu/title_pirate_battle.png" alt="Pirate Battle" />
+          <img src="/game/ui/menu/title_pirate_battle.png" alt="Pirate Battle" width={384} height={128} />
         </h1>
         <p className="tagline">Set sail. Take command.</p>
 
